@@ -1,6 +1,10 @@
 import { supabaseServer } from "./supabase";
+import type { SupabaseClient, User } from "@supabase/supabase-js";
 import type { NextRequest } from "next/server";
-export async function authorize(req:NextRequest,matchId?:string,adminOnly=false){
+export type AuthSuccess = { db: SupabaseClient; user: User; isAdmin: boolean; role: string };
+export type AuthFailure = { error: string; status: number };
+export type AuthResult = AuthSuccess | AuthFailure;
+export async function authorize(req:NextRequest,matchId?:string,adminOnly=false): Promise<AuthResult> {
  const bearer=req.headers.get("authorization")||"";
  if(!bearer.startsWith("Bearer "))return {error:"Sign in required",status:401} as const;
  const db=supabaseServer();
