@@ -1,6 +1,6 @@
 import {createHmac,timingSafeEqual} from "node:crypto";
 const ttlSeconds=24*60*60;
-function key(){const secret=process.env.SUPABASE_SERVICE_ROLE_KEY;if(!secret||secret.length<24)throw Error("Server authentication key not configured");return secret;}
+function key(){const secret=process.env.OBS_OVERLAY_SIGNING_SECRET;if(!secret||secret.length<24)throw Error("Server authentication key not configured");return secret;}
 export function issueOverlayToken(court:number,now=Math.floor(Date.now()/1000)){
  if(![1,2,3].includes(court))throw Error("Invalid court");
  const expires=now+ttlSeconds;
