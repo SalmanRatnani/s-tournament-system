@@ -13,7 +13,7 @@ export async function authorize(req:NextRequest,matchId?:string,adminOnly=false)
  const profile=await db.from("profiles").select("role").eq("id",user.id).maybeSingle();
  if(profile.error)return {error:"Access lookup failed",status:503} as const;
  const role=profile.data?.role||"viewer";
- const isAdmin=role==="admin"||role==="owner";
+ const isAdmin=role==="owner";
  if(!isAdmin&&adminOnly)return {error:"Organizer access required",status:403} as const;
  if(!isAdmin&&matchId){const assignment=await db.from("referee_assignments").select("match_id").eq("match_id",matchId).eq("user_id",user.id).maybeSingle();
  if(assignment.error)return {error:"Assignment lookup failed",status:503} as const;
