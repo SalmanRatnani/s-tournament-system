@@ -11,19 +11,21 @@ const bad=(msg:string):never=>{throw Error(msg)};
 const obj=(v:unknown):Record<string,unknown>=>v&&typeof v==="object"&&!Array.isArray(v)?v as Record<string,unknown>:bad("Expected an object");
 const str=(v:unknown,label:string,max=180)=>typeof v==="string"&&v.trim()&&v.length<=max?v.trim():bad(`Invalid ${label}`);
 const optional=(v:unknown,label:string,max=255)=>v==null||v===""?null:str(v,label,max);
-const safeURL=(v:unknown,label:string)=>{const value=optional(v,label,2048);if(!value)return null;try{const u=new URL(value);if(u.protocol!=="https:")bad(`${label} must be an HTTPS URL`);if(u.username||u.password)bad(`${label} must not contain credentials`);return value;}catch{bad(`Invalid ${label}`)}};
+const safeURL=(v:unknown,label:string):string|null=>{const value=optional(v,label,2048);if(!value)return null;try{const u=new URL(value);if(u.protocol!=="https:")bad(`${label} must be an HTTPS URL`);if(u.username||u.password)bad(`${label} must not contain credentials`);return value;}catch{return bad(`Invalid ${label}`)}};
 /** Reject unknown shapes before reaching privileged import RPC. */
 export function validateAuctionHandoff(raw:unknown,strictRoster=true):AuctionHandoff{
  const d=obj(raw);if(d.format!=="s-tournament-auction-handoff"||d.version!==1)bad("Unsupported interchange file/version");
  const source=obj(d.source);if(source.system!=="s-auction-system"||source.status!=="completed")bad("Only completed s-auction-system exports are accepted");
- if(!Array.isArray(d.teams)||(!strictRoster&&d.teams.length>6)||(strictRoster&&d.teams.length!==6))bad("Expected six teams");
+ const teamInputs:unknown[]=Array.isArray(d.teams)?d.teams:bad("Expected six teams");
+ if((!strictRoster&&teamInputs.length>6)||(strictRoster&&teamInputs.length!==6))bad("Expected six teams");
  const names=new Set<string>(),teamIds=new Set<string>(),allIds=new Set<string>();
- const teams:AuctionTeam[]=d.teams.map((input,i)=>{
+ const teams:AuctionTeam[]=teamInputs.map((input,i)=>{
   const t=obj(input);const name=str(t.name,`team ${i+1} name`,80), id=str(t.source_team_id,"team ID");
   if(names.has(name.toLowerCase())||teamIds.has(id))bad("Duplicate teams in export");names.add(name.toLowerCase());teamIds.add(id);
-  if(!Array.isArray(t.players)||t.players.length>(18)||strictRoster&&t.players.length!==18)bad(`Team ${name} must contain exactly 18 players`);
+  const playerInputs:unknown[]=Array.isArray(t.players)?t.players:bad(`Invalid players for ${name}`);
+  if(playerInputs.length>18||(strictRoster&&playerInputs.length!==18))bad(`Team ${name} must contain exactly 18 players`);
   const playerNames=new Set<string>();
-  const players:AuctionPlayer[]=t.players.map((input,j)=>{
+  const players:AuctionPlayer[]=playerInputs.map((input,j)=>{
    const p=obj(input),pid=str(p.source_player_id,`player ${j+1} ID`),pn=str(p.name,`player ${j+1} name`,120);
    if(allIds.has(pid)||playerNames.has(pn.toLowerCase()))bad(`Duplicate player in export: ${pn}`);
    allIds.add(pid);playerNames.add(pn.toLowerCase());
