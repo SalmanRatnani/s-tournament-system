@@ -3,14 +3,14 @@ import {useParams} from "next/navigation";
 import Link from "next/link";
 import {Camera,ChevronLeft,ExternalLink,Youtube,Radio} from "lucide-react";
 import {Shell,PageHeading} from "@/components/shell";
-import {useCourt} from "@/lib/use-matches";
+import {useLiveCourt} from "@/lib/use-live-court";
 import {useCourtStreams} from "@/lib/use-court-streams";
 import {youtubeEmbedUrl,youtubeWatchUrl} from "@/lib/youtube";
 import {CourtCard} from "@/components/court-card";
 export default function WatchCourt(){
  const court=Number(useParams().court);
  const valid=Number.isInteger(court)&&court>=1&&court<=3;
- const {match:m}=useCourt(court);
+ const {match:m}=useLiveCourt(court);
  const {courts,loading}=useCourtStreams();
  const videoId=courts.find(c=>c.id===court)?.youtube_video_id;
  return <Shell title={"WATCH COURT "+court} mode="public"><div className="content animate-in viewer-page">
