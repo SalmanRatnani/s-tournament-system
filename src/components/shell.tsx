@@ -31,7 +31,8 @@ const operations: NavLink[] = [
   { to: "/admin/teams", label: "Squads & rosters", Icon: Users },
   { to: "/admin/fixtures", label: "Competition control", Icon: GitBranch },
   { to: "/admin/referees", label: "Referee allocation", Icon: UserRoundCheck },
-  { to: "/admin/users", label: "User permissions", Icon: LockKeyhole },
+  { to: "/admin/users", label: "Referee accounts", Icon: LockKeyhole },
+  { to: "/admin/viewer-links", label: "Viewer links & YouTube", Icon: Radio },
   { to: "/admin/scoring-rules", label: "Scoring format", Icon: Settings2 },
   { to: "/admin/import-auction", label: "Auction import", Icon: FileUp },
   { to: "/broadcast", label: "Broadcast setup", Icon: Clapperboard },
@@ -128,7 +129,7 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
       <div className="public-header-actions">
         {demoEnabled && <span className="demo-flag public-demo-flag">DEMO DATA</span>}
         <Link href={email ? userDestination : "/login"} className="btn btn-primary public-signin">
-          {email ? <UserCircle2 size={16} /> : <LogIn size={16} />}{email ? "My workspace" : "Sign in"}<ArrowRight size={15} />
+          {email ? <UserCircle2 size={16} /> : <LogIn size={16} />}{email ? "Staff workspace" : "Staff login"}<ArrowRight size={15} />
         </Link>
         <button type="button" className="icon-btn public-menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen} aria-controls="public-mobile-menu" onClick={() => setMenuOpen(value => !value)}>
@@ -138,7 +139,7 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
     </div>
     {menuOpen && <nav id="public-mobile-menu" className="public-mobile-menu" aria-label="Mobile tournament navigation">
       {discover.map(item => <Link onClick={() => setMenuOpen(false)} key={item.to} href={item.to}><item.Icon size={17} />{item.label}</Link>)}
-      <Link onClick={() => setMenuOpen(false)} href={email ? userDestination : "/register"}><UserCircle2 size={17} />{email ? "My workspace" : "Create account"}</Link>
+
     </nav>}
   </header>;
 
