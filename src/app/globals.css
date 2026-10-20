@@ -78,3 +78,23 @@ body:has(.overlay-root){background:transparent!important}.watch-layout{grid-temp
 }
 @media(max-width:640px){.public-footer{flex-direction:column;text-align:center;align-items:center}.public-signin{padding:10px 12px}.public-home .hero{padding:30px 22px}.public-home .headline{letter-spacing:-1.8px}.auth-shell .content{padding:35px 18px 50px}.auth-shell .form-card{margin:20px 0 40px}.workspace-main>.content{padding:23px 16px 50px}.workspace-topbar{padding:0 16px}.topbar-account span{display:none}.topbar-breadcrumb strong{font-size:11px}.role-chip{padding:6px 9px}.public-header .brand{font-size:17px}.public-header .brand small{font-size:8px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Public livestream experience, distinct from the protected management studio */
+.viewer-page{max-width:1400px}
+.viewer-hero{padding:clamp(30px,5vw,62px);border:1px solid #2a514f;border-radius:25px;background:radial-gradient(circle at 82% 26%,rgba(97,230,174,.15),transparent 42%),linear-gradient(145deg,#152c3c,#0d192b);overflow:hidden}
+.viewer-hero .headline{font-size:clamp(37px,5vw,69px);line-height:1.07;letter-spacing:-2.5px;margin:14px 0}
+.viewer-hero .subline{max-width:690px;font-size:15px}
+.viewer-hero .eyebrow{display:flex;align-items:center;gap:8px}
+.viewer-court{display:flex;flex-direction:column;transition:transform .23s,border-color .23s,box-shadow .23s}
+.viewer-court:hover{transform:translateY(-5px);border-color:#477b6f;box-shadow:0 23px 45px rgba(0,0,0,.2)}
+.viewer-court-banner{min-height:155px;padding:21px;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(circle at 80% 83%,rgba(97,230,174,.13),transparent 45%),#13283c;border-bottom:1px solid #2b4054}
+.viewer-court-banner>svg{align-self:center}
+.viewer-court .panel-pad{flex:1;display:flex;flex-direction:column}
+.viewer-court .panel-pad .btn:first-of-type{margin-top:auto!important}
+.viewer-court .section-title{font-size:17px;line-height:1.5}
+.viewer-court .help-note{min-height:40px}
+.viewer-link-value{display:block;max-width:100%;min-width:0;overflow-x:auto;white-space:nowrap;color:#b5ffe0;background:#101b2b;border:1px solid #293d51;padding:12px;border-radius:10px;font-size:11px;flex:1;user-select:all}
+.viewer-manager .panel{overflow:visible}
+.viewer-actions{margin-top:16px}
+.viewer-page .watch-video{border:1px solid #344e61}
+@media(max-width:800px){.viewer-hero{padding:28px 23px}.viewer-hero .headline{letter-spacing:-1.5px}.viewer-manager>.grid{grid-template-columns:1fr}.viewer-court-banner{min-height:125px}}
