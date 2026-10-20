@@ -1,0 +1,15 @@
+"use client";
+import Link from "next/link";
+import {ShieldAlert,LoaderCircle,Users,UserRoundCheck,ClipboardList,GitBranch,LayoutDashboard,ArrowRight,Settings2,FileUp} from "lucide-react";
+import {Shell,PageHeading} from "./shell";
+import {useOrganizer, type OrganizerData} from "@/lib/use-organizer";
+export const adminLinks=[{href:"/admin",label:"Controller",Icon:LayoutDashboard},{href:"/admin/users",label:"User roles",Icon:Users},{href:"/admin/teams",label:"Teams & rosters",Icon:ClipboardList},{href:"/admin/fixtures",label:"League & knockout",Icon:GitBranch},{href:"/admin/referees",label:"Referee allocation",Icon:UserRoundCheck},{href:"/admin/scoring-rules",label:"Scoring rules",Icon:Settings2},{href:"/admin/import-auction",label:"Import auction",Icon:FileUp}];
+export function Organizer({title,subtitle,children}:{title:string;subtitle:string;children:(s:ReturnType<typeof useOrganizer>)=>React.ReactNode}){
+ const s=useOrganizer();return <Shell title="ORGANIZER"><div className="content animate-in"><PageHeading eyebrow="SECURE COMMAND CENTER" title={title} subtitle={subtitle}/>
+ <div className="organizer-tabs">{adminLinks.map(l=><Link className="btn" href={l.href} key={l.href}><l.Icon size={16}/>{l.label}</Link>)}</div>
+ {s.loading?<div className="panel panel-pad"><LoaderCircle className="spin" size={20}/> Checking permissions…</div>:s.error?<div className="panel panel-pad"><ShieldAlert size={24} color="var(--mint)"/><h2 style={{marginTop:10}}>Organizer access required</h2><p className="subline">{s.error}</p><Link className="btn btn-primary" href="/login">Sign in <ArrowRight size={16}/></Link><p className="help-note">First-time setup: register your account, connect the separate database and grant the owner role using the secure setup guide.</p></div>:children(s)}
+ </div></Shell>;
+}
+export function Count({label,value,subtitle}:{label:string;value:number|string;subtitle?:string}){return <div className="panel stat"><div className="stat-label">{label}</div><div className="stat-value">{value}</div>{subtitle&&<div className="stat-sub">{subtitle}</div>}</div>}
+export function TeamRosterRows({data}:{data:OrganizerData}){return <div className="panel table-wrap"><table className="table"><thead><tr><th>Team</th><th>Registered</th><th>Slots</th><th>Roster status</th></tr></thead><tbody>{data.teams.map(t=>{const count=data.players.filter(p=>p.team_id===t.id).length;return <tr key={t.id}><td><strong>{t.name}</strong></td><td>{count}/18</td><td>{18-count} open</td><td><span className={`badge ${count===18?"live":"scheduled"}`}>{count===18?"READY":"INCOMPLETE"}</span></td></tr>})}</tbody></table></div>}
+export function ErrorNotice({message}:{message:string}){return message?<div className="error" role="alert" style={{marginTop:12}}>{message}</div>:null}
