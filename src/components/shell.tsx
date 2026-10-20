@@ -116,10 +116,10 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
     return () => window.removeEventListener("keydown", onEscape);
   }, [menuOpen]);
 
-  const isStaff = !!email && (role === "owner" || role === "admin" || role === "referee");
+  const isStaff = !!email && (role === "owner" || role === "referee");
   const workspace = mode !== "auth" && mode !== "public" && authReady && isStaff;
-  const canOrganize = role === "owner" || role === "admin";
-  const userDestination = canOrganize ? "/admin" : role === "referee" ? "/referee" : "/account";
+  const canOrganize = role === "owner";
+  const userDestination = canOrganize ? "/admin" : role === "referee" ? "/referee" : "/live";
   const publicHeader = <header className="public-header">
     <div className="public-header-inner">
       <Brand />
@@ -128,8 +128,8 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
       </nav>
       <div className="public-header-actions">
         {demoEnabled && <span className="demo-flag public-demo-flag">DEMO DATA</span>}
-        <Link href={email ? userDestination : "/login"} className="btn btn-primary public-signin">
-          {email ? <UserCircle2 size={16} /> : <LogIn size={16} />}{email ? "Staff workspace" : "Staff login"}<ArrowRight size={15} />
+        <Link href={email ? userDestination : "/login"} className="btn public-signin" title="For Main Controller and assigned referees only">
+          {email && isStaff ? <UserCircle2 size={16} /> : <LogIn size={16} />}{email && isStaff ? "Staff workspace" : "Staff login"}<ArrowRight size={15} />
         </Link>
         <button type="button" className="icon-btn public-menu-toggle" aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen} aria-controls="public-mobile-menu" onClick={() => setMenuOpen(value => !value)}>
