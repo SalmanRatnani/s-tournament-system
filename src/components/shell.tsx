@@ -35,7 +35,7 @@ const operations: NavLink[] = [
   { to: "/admin/viewer-links", label: "Viewer links & YouTube", Icon: Radio },
   { to: "/admin/scoring-rules", label: "Scoring format", Icon: Settings2 },
   { to: "/admin/import-auction", label: "Auction import", Icon: FileUp },
-  { to: "/broadcast", label: "Broadcast setup", Icon: Clapperboard },
+  { to: "/admin/viewer-links", label: "Public streams", Icon: Clapperboard },
 ];
 const refereeLinks: NavLink[] = [{ to: "/referee", label: "Referee scoring", Icon: UserRoundCheck }];
 const publicQuickLinks = discover.slice(1, 5);
