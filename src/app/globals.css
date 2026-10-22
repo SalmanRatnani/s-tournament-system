@@ -178,3 +178,30 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:800px){.launch-hero{grid-template-columns:1fr}.launch-hero-content{padding:35px 27px}.launch-hero-visual{margin:0 26px 27px;transform:none}.launch-court-illustration{height:180px}.launch-stage-top,.launch-stage-bottom{padding:15px 21px}.launch-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.launch-section{margin-top:45px}.launch-final-cta{margin-top:43px}}
 @media(max-width:480px){.launch-title{font-size:clamp(43px,12vw,58px);letter-spacing:-2.6px}.launch-kicker{font-size:9px;letter-spacing:1.1px}.launch-metrics>div{grid-template-columns:1fr;padding:15px}.metric-icon{grid-row:auto;margin-bottom:10px}.launch-hero-meta{gap:10px}.launch-final-cta{padding:25px;flex-direction:column;align-items:flex-start}.launch-empty-court{min-height:195px}.launch-court-number{font-size:50px}.result-row{padding:18px}.result-side{font-size:14px}.launch-trustline{font-size:9px}.results-search{width:100%}}
 @media(prefers-reduced-motion:reduce){.launch-hero-visual,.launch-empty-court,.launch-discover-card{transition:none}}
+
+/* Controller launch readiness */
+.controller-intro{border:1px solid #376759;border-radius:22px;background:radial-gradient(circle at 93% 10%,#36765a50,transparent 48%),linear-gradient(130deg,#193b39,#102037);display:flex;justify-content:space-between;align-items:center;gap:25px;padding:clamp(24px,4vw,44px);overflow:hidden}
+.controller-intro h2{font:750 clamp(28px,3.3vw,45px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-1.5px;margin:0 0 12px}
+.controller-intro h2 span{color:#a2efbd}
+.controller-intro p{color:#a1bdc3;font-size:13px;line-height:1.8;max-width:510px;margin-bottom:22px}
+.controller-intro-side{display:flex;flex-direction:column;gap:6px;align-items:center;color:#9ce9bb;padding:21px 33px;border-radius:18px;background:#183b3d9a;border:1px solid #437a6e;white-space:nowrap}
+.controller-intro-side strong{font:750 54px 'Space Grotesk',sans-serif;color:white}
+.controller-intro-side span{font-size:10px;letter-spacing:1.5px;font-weight:800}
+.controller-readiness{padding:clamp(21px,3vw,31px)}
+.controller-progress{color:#a3efbb;border:1px solid #36725a;background:#123c30;font-size:11px;font-weight:800;border-radius:20px;padding:10px 15px}
+.controller-progress-track{height:8px;border-radius:100px;background:#293e4b;overflow:hidden;margin-bottom:23px}
+.controller-progress-track span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#52a9c6,#7ff0ae);transition:width .25s}
+.controller-step-list{display:grid;gap:10px}
+.controller-step{display:flex;align-items:center;gap:17px;background:#102031;border:1px solid #2a4053;border-radius:14px;padding:15px;color:#e0ebf2;transition:background .2s,border-color .2s}
+.controller-step:hover{background:#1a3242;border-color:#51967c}
+.controller-step-icon{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:12px;color:#9db6cb;background:#273e50}
+.controller-step-icon.ready{color:#92efba;background:#225443}
+.controller-step>div:nth-child(2){flex:1}
+.controller-step strong{font-size:13px}
+.controller-step p{color:#8ba3b4;font-size:11px;margin:6px 0 0;line-height:1.6}
+.controller-step-state{font-size:10px;font-weight:800;letter-spacing:.8px;border-radius:50px;padding:8px 11px;background:#283c4a;color:#a1b7c3;white-space:nowrap}
+.controller-step-state.complete{background:#1b4b39;color:#a6f6bc}
+.controller-operations .launch-discover-card{min-height:253px}
+.controller-empty{display:flex;flex-direction:column;align-items:center;gap:13px;padding:45px 20px}
+.controller-empty h3{font-size:20px;margin:0}.controller-empty p{font-size:13px;line-height:1.7;max-width:380px}
+@media(max-width:630px){.controller-intro{align-items:flex-start}.controller-intro-side{display:none}.controller-step{gap:10px;padding:12px}.controller-step-state{font-size:9px;padding:6px 8px}.controller-step-icon{width:35px;height:35px}.controller-step>svg:last-child{display:none}}
