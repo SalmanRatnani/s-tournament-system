@@ -205,3 +205,69 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .controller-empty{display:flex;flex-direction:column;align-items:center;gap:13px;padding:45px 20px}
 .controller-empty h3{font-size:20px;margin:0}.controller-empty p{font-size:13px;line-height:1.7;max-width:380px}
 @media(max-width:630px){.controller-intro{align-items:flex-start}.controller-intro-side{display:none}.controller-step{gap:10px;padding:12px}.controller-step-state{font-size:9px;padding:6px 8px}.controller-step-icon{width:35px;height:35px}.controller-step>svg:last-child{display:none}}
+
+/* SaaS price discovery and secure-disabled checkout */
+.public-pricing-link{color:#bfe9d5;font-weight:800;font-size:12px;letter-spacing:.2px;padding:9px 6px}
+.public-pricing-link:hover,.public-pricing-link[aria-current="page"]{color:#8ef6b4}
+.pricing-intro{text-align:center;max-width:750px;margin:0 auto 38px}
+.pricing-title{font-size:clamp(42px,5.4vw,76px);letter-spacing:-3px;line-height:1.06;margin:12px 0 20px}
+.pricing-title span{color:#a4f2bb}
+.pricing-intro>p{color:#98acbe;font-size:15px;line-height:1.85}
+.pricing-preview-note{display:inline-flex;gap:9px;align-items:center;justify-content:center;max-width:100%;margin-top:16px;padding:11px 16px;background:#1b3440;border:1px solid #46685f;color:#a9dbc8;border-radius:12px;font-size:11px;line-height:1.6}
+.pricing-switch{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:26px;font-size:12px;color:#b6c8d9}
+.pricing-switch>div{display:flex;border:1px solid #385469;background:#112334;padding:5px;gap:4px;border-radius:12px}
+.pricing-switch button{padding:10px 14px;color:#9fbbce;border:none;background:transparent;border-radius:8px;font:inherit;font-weight:800;cursor:pointer}
+.pricing-switch button.selected{background:#275044;color:#d3f9e1}
+.pricing-switch button span{color:#a4ebb9;font-size:10px;margin-left:5px}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch}
+.pricing-tier{padding:27px 22px;border:1px solid #2c4353;border-radius:19px;background:linear-gradient(155deg,#142737,#0e1929);display:flex;flex-direction:column;min-height:540px}
+.pricing-tier.highlighted{border-color:#73be9a;background:linear-gradient(155deg,#1a3d3b,#122536 65%);box-shadow:0 0 0 1px #376b59}
+.pricing-tier-top{min-height:34px;display:flex;justify-content:space-between;gap:6px;align-items:flex-start;flex-wrap:wrap}
+.pricing-tag{font-size:9px;color:#8be5b6;letter-spacing:1.2px;font-weight:850}
+.pricing-recommended{display:inline-flex;gap:3px;align-items:center;font-size:8px;padding:6px 7px;border-radius:30px;background:#285d47;color:#e0fff0}
+.pricing-tier h2{font:750 23px 'Space Grotesk',sans-serif;margin:12px 0}
+.pricing-summary{min-height:71px;color:#a3b6c7;font-size:12px;line-height:1.75}
+.pricing-value{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px;margin:19px 0 4px}
+.pricing-value strong{font:750 clamp(26px,2.5vw,37px) 'Space Grotesk',sans-serif;color:#f3fbfc;letter-spacing:-1.2px}
+.pricing-value span{color:#a1b8c2;font-size:12px}
+.pricing-tax{min-height:37px;color:#819aac;font-size:10px;line-height:1.6}
+.pricing-tier-cta{width:100%;min-height:45px;margin:12px 0 25px}
+.pricing-includes{color:#819da9;font-size:9px;font-weight:850;letter-spacing:1px;border-top:1px solid #365060;padding-top:23px}
+.pricing-features{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:13px}
+.pricing-features li{display:flex;align-items:flex-start;gap:9px;color:#c4d6df;font-size:11px;line-height:1.55}
+.pricing-features svg{flex:none;color:#82eab1;margin-top:1px}
+.pricing-bottom{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:25px}
+.pricing-bottom>div{padding:23px;border:1px solid #293f4b;border-radius:15px;background:#122538}
+.pricing-bottom svg{color:#92ebba;margin-bottom:10px;display:block}
+.pricing-bottom strong{display:block;font-size:14px}
+.pricing-bottom p{font-size:12px;color:#8fa5b7;line-height:1.75;margin:10px 0 0}
+.pricing-faq{max-width:880px;margin:75px auto 35px}
+.pricing-faq h2{font:750 36px 'Space Grotesk',sans-serif;letter-spacing:-1px}
+.pricing-faq details{border-bottom:1px solid #2e4754;padding:19px 0}
+.pricing-faq summary{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:750;list-style:none}
+.pricing-faq summary::-webkit-details-marker{display:none}
+.pricing-faq summary svg{color:#91deaf;flex:none}
+.pricing-faq details p{padding:12px 0 0 28px;color:#a1b8c9;line-height:1.8;font-size:12px}
+.checkout-page{max-width:1150px!important}
+.checkout-back{display:inline-flex;align-items:center;gap:7px;color:#a0d2bd;font-weight:750;font-size:12px;margin-bottom:32px}
+.checkout-intro{margin-bottom:28px}.checkout-layout{display:grid;grid-template-columns:1fr 1.08fr;align-items:start;gap:19px}
+.checkout-summary,.checkout-gate{padding:clamp(24px,3vw,38px)}
+.checkout-summary h2{font:750 30px 'Space Grotesk',sans-serif;margin:10px 0}
+.checkout-summary .subline{margin-bottom:26px}
+.checkout-line,.checkout-total{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid #253d4e;color:#9db4c2;font-size:12px}
+.checkout-line strong{color:#effaf5}.checkout-total{margin:10px 0 20px;color:#dfefeb;font-weight:750;align-items:center}
+.checkout-total strong{font-size:19px;color:#a5edbf}
+.checkout-lock{display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:#28523f;color:#9af0b6;margin-bottom:18px}
+.checkout-gate h2{font:750 28px 'Space Grotesk',sans-serif;margin:9px 0 15px}
+.checkout-gate>p{color:#9bb1c2;line-height:1.85;font-size:13px}
+.checkout-safeguards{display:grid;gap:13px;padding:22px 0;margin:18px 0;border-block:1px solid #2b4551}
+.checkout-safeguards>div{display:flex;align-items:center;gap:10px;color:#c0d9d4;font-size:12px}
+.checkout-safeguards svg{color:#8bedb0;flex:none}
+.checkout-disabled{width:100%;min-height:52px;opacity:.55;cursor:not-allowed}
+.checkout-secondary{display:inline-flex;align-items:center;gap:6px;margin-top:22px;color:#a1eabc;font-size:12px}
+.checkout-foot{display:flex;align-items:center;gap:10px;margin:28px 0;color:#8fa8b6;font-size:12px;line-height:1.7}
+.checkout-foot svg{color:#a1e9b7;flex:none}
+.checkout-invalid{max-width:660px;margin:auto}.checkout-invalid p{color:#a2b6c7}
+@media(max-width:1170px){.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pricing-summary{min-height:0}.pricing-tier{min-height:0}}
+@media(max-width:780px){.checkout-layout{grid-template-columns:1fr}.pricing-bottom{grid-template-columns:1fr}}
+@media(max-width:540px){.pricing-grid{grid-template-columns:1fr}.pricing-switch{flex-direction:column}.pricing-intro{text-align:left}.pricing-title{letter-spacing:-2px}.pricing-tier{padding:23px}.pricing-faq{margin-top:48px}.public-pricing-link{display:none}.pricing-preview-note{text-align:left}.pricing-bottom>div{padding:17px}}
