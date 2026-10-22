@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -43,8 +44,8 @@ const publicQuickLinks = discover.slice(1, 5);
 function Brand({ compact = false }: { compact?: boolean }) {
   return (
     <Link href="/" className={"brand brand-modern" + (compact ? " brand-compact" : "")} aria-label="S Tournament home">
-      <span className="brand-icon"><Activity size={19} strokeWidth={2.4} /></span>
-      {!compact && <span className="brand-wordmark">S TOURNAMENT<small>THE MATCH EXPERIENCE</small></span>}
+      <span className="brand-icon brand-symbol"><Image src="/brand/icon.svg" alt="" width={42} height={42} priority /></span>
+      {!compact && <span className="brand-wordmark">S TOURNAMENT<small>MULTI-SPORT PLATFORM</small></span>}
     </Link>
   );
 }

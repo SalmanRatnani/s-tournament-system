@@ -271,3 +271,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:1170px){.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pricing-summary{min-height:0}.pricing-tier{min-height:0}}
 @media(max-width:780px){.checkout-layout{grid-template-columns:1fr}.pricing-bottom{grid-template-columns:1fr}}
 @media(max-width:540px){.pricing-grid{grid-template-columns:1fr}.pricing-switch{flex-direction:column}.pricing-intro{text-align:left}.pricing-title{letter-spacing:-2px}.pricing-tier{padding:23px}.pricing-faq{margin-top:48px}.public-pricing-link{display:none}.pricing-preview-note{text-align:left}.pricing-bottom>div{padding:17px}}
+
+/* Branded scalable navigation icon */
+.brand-icon.brand-symbol{background:transparent!important;border-radius:11px;width:42px;height:42px;overflow:hidden;box-shadow:0 3px 16px #0511266a;flex-shrink:0}.brand-symbol img{display:block;width:100%;height:100%}.brand-modern{gap:10px}.brand-modern .brand-wordmark{font-weight:800;letter-spacing:-.5px}.brand-modern small{color:#8fc7ed;letter-spacing:1.25px}
