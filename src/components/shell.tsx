@@ -127,6 +127,7 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
         {publicQuickLinks.map(item => <Link key={item.to} href={item.to} aria-current={path === item.to ? "page" : undefined}>{item.label}</Link>)}
       </nav>
       <div className="public-header-actions">
+        <Link href="/pricing" className="public-pricing-link" aria-current={path==="/pricing"?"page":undefined}>Pricing</Link>
         {demoEnabled && <span className="demo-flag public-demo-flag">DEMO DATA</span>}
         <Link href={email ? userDestination : "/login"} className="btn public-signin" title="For Main Controller and assigned referees only">
           {email && isStaff ? <UserCircle2 size={16} /> : <LogIn size={16} />}{email && isStaff ? "Staff workspace" : "Staff login"}<ArrowRight size={15} />
@@ -139,6 +140,7 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
     </div>
     {menuOpen && <nav id="public-mobile-menu" className="public-mobile-menu" aria-label="Mobile tournament navigation">
       {discover.map(item => <Link onClick={() => setMenuOpen(false)} key={item.to} href={item.to}><item.Icon size={17} />{item.label}</Link>)}
+      <Link onClick={() => setMenuOpen(false)} href="/pricing">Pricing</Link>
 
     </nav>}
   </header>;
@@ -146,7 +148,7 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
   if (!workspace) return <div className={"public-shell" + (mode === "auth" ? " auth-shell" : "")}>
     {publicHeader}
     <main id="main-content" className="public-main">{children}</main>
-    <footer className="public-footer"><span>S TOURNAMENT <span className="text-green">•</span> BUILT FOR THE GAME</span><span>Public scores • Independent court broadcasts</span></footer>
+    <footer className="public-footer"><span>S TOURNAMENT <span className="text-green">•</span> BUILT FOR THE GAME</span><span><Link href="/pricing">Pricing</Link> · Public scores • Independent court broadcasts</span></footer>
   </div>;
 
   const sidebar = (mobile: boolean) => <div className="sidebar-inner">
