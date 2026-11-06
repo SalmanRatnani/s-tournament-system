@@ -3,7 +3,7 @@ import {Fragment,useEffect,useMemo,useState} from "react";
 import Link from "next/link";
 import {ArrowUpRight,CalendarDays,Clock3,MapPin,Trophy} from "lucide-react";
 import {supabaseBrowser} from "@/lib/supabase";
-import {MBBL_LEAGUE_ROUNDS,MBBL_NON_MATCH_SCHEDULE,MBBL_TIMEZONE} from "@/lib/mbbl/fixtures";
+import {MBBL_EVENT_DATE_LABEL,MBBL_LEAGUE_ROUNDS,MBBL_NON_MATCH_SCHEDULE} from "@/lib/mbbl/fixtures";
 import {MBBL_TEAMS} from "@/lib/mbbl/catalog";
 
 type FixtureRow={
@@ -44,7 +44,7 @@ export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
  return <div className="mbbl-schedule">
   <div className="mbbl-fixture-intro">
    <div><div className="eyebrow">OFFICIAL MBBL SEASON 1 TIMETABLE</div><h2>Every round. Every court.</h2><p>Five league rounds, three simultaneous courts, then the top-four playoffs.</p></div>
-   <div className="mbbl-fixture-stats"><span><CalendarDays size={15}/> Date not specified on poster</span><span><Clock3 size={15}/> All times IST</span><span><MapPin size={15}/> Three courts</span></div>
+   <div className="mbbl-fixture-stats"><span><CalendarDays size={15}/> {MBBL_EVENT_DATE_LABEL}</span><span><Clock3 size={15}/> All times IST</span><span><MapPin size={15}/> Three courts</span></div>
   </div>
   {error&&<div className="error" role="alert">Unable to load published fixtures: {error}</div>}
   {loading?<div className="panel empty" role="status">Loading official MBBL fixtures…</div>:league.length!==15?<div className="panel empty">The MBBL fixture timetable is being prepared for publication. {league.length} of 15 league ties are currently published.</div>:<>
@@ -75,7 +75,7 @@ export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
     <span>Semifinals and final participants depend on completed league standings.</span>
    </div>
   </>}
-  <div className="mbbl-fixture-note">These are scheduled team ties, not completed results or active referee games. Each tie requires nine compulsory doubles games under the MBBL Season 1 rules. Match start times may change under organiser control. The poster does not provide an event date.</div>
+  <div className="mbbl-fixture-note">These are scheduled team ties, not completed results or active referee games. Each tie requires nine compulsory doubles games under the MBBL Season 1 rules. Match start times may change under organiser control. Event date confirmed by the organiser: {MBBL_EVENT_DATE_LABEL}.</div>
   <div className="row wrap" style={{marginTop:20}}><Link href="/mbbl" className="btn">Meet the six teams <ArrowUpRight size={15}/></Link><Link href="/mbbl/rules" className="btn">Match format & rules <ArrowUpRight size={15}/></Link></div>
  </div>;
 }
