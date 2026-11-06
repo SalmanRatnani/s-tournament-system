@@ -1,5 +1,5 @@
 "use client";
-import {useEffect,useMemo,useState} from "react";
+import {Fragment,useEffect,useMemo,useState} from "react";
 import Link from "next/link";
 import {ArrowUpRight,CalendarDays,Clock3,MapPin,Trophy} from "lucide-react";
 import {supabaseBrowser} from "@/lib/supabase";
@@ -53,13 +53,13 @@ export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
      <thead><tr><th scope="col">Time / Stage</th><th scope="col">Court 1</th><th scope="col">Court 2</th><th scope="col">Court 3</th></tr></thead>
      <tbody>
       {MBBL_NON_MATCH_SCHEDULE.filter(e=>["reporting","breakfast","opening"].includes(e.key)).map(e=><tr key={e.key} className="mbbl-timetable-event"><th scope="row">{niceTime(e.time)}{e.end?" – "+niceTime(e.end):""}</th><td colSpan={3}>{e.title}</td></tr>)}
-      {MBBL_LEAGUE_ROUNDS.map(r=><>
+      {MBBL_LEAGUE_ROUNDS.map(r=><Fragment key={r.round}>
        <tr key={"round-"+r.round} className="mbbl-timetable-league">
         <th scope="row"><span className="mbbl-fixture-round">ROUND {r.round}</span><span>{niceTime(r.start)} – {niceTime(r.end)}</span></th>
         {([1,2,3] as const).map(c=><td key={c}>{formatMatch(findByRound(r.round,c))}</td>)}
        </tr>
        {r.round===3&&<tr key="lunch" className="mbbl-timetable-break"><th scope="row">1:00 – 1:30 PM</th><td colSpan={3}>LUNCH BREAK · 30 MINUTES</td></tr>}
-      </>)}
+      </Fragment>)}
       <tr className="mbbl-timetable-knockout"><th scope="row"><span>SEMIFINALS</span><span>4:30 – 6:00 PM</span></th>
        <td>{semifinals.find(x=>x.court_id===1)?<div><strong>Semifinal 1</strong><small>LEAGUE RANK 1 vs RANK 4</small></div>: "Semifinal 1 · Rank 1 vs Rank 4"}</td>
        <td>{semifinals.find(x=>x.court_id===2)?<div><strong>Semifinal 2</strong><small>LEAGUE RANK 2 vs RANK 3</small></div>:"Semifinal 2 · Rank 2 vs Rank 3"}</td>
