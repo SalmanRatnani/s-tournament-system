@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import {
   Activity, ArrowRight, BarChart3, CalendarDays, ChevronLeft, ChevronRight,
   Clapperboard, FileUp, GitBranch, LayoutDashboard, LockKeyhole, LogIn,
-  Menu, Radio, Settings2, Shield, Trophy, UserCircle2, UserRoundCheck,
+  Menu, Radio, Settings2, Shield, Trophy, BookOpen, UserCircle2, UserRoundCheck,
   Users, X
 } from "lucide-react";
 import { demoEnabled } from "@/lib/demo";
@@ -25,12 +25,14 @@ const discover: NavLink[] = [
   { to: "/standings", label: "Standings", Icon: BarChart3 },
   { to: "/knockouts", label: "Knockouts", Icon: GitBranch },
   { to: "/teams", label: "Teams", Icon: Shield },
+  { to: "/mbbl", label: "MBBL Season 1", Icon: Trophy },
   { to: "/players", label: "Players", Icon: Users },
 ];
 const operations: NavLink[] = [
   { to: "/admin", label: "Command center", Icon: LayoutDashboard },
   { to: "/admin/teams", label: "Squads & rosters", Icon: Users },
   { to: "/admin/fixtures", label: "Competition control", Icon: GitBranch },
+  { to: "/admin/mbbl", label: "MBBL match desk", Icon: BookOpen },
   { to: "/admin/referees", label: "Referee allocation", Icon: UserRoundCheck },
   { to: "/admin/users", label: "Referee accounts", Icon: LockKeyhole },
   { to: "/admin/viewer-links", label: "Viewer links & YouTube", Icon: Radio },
