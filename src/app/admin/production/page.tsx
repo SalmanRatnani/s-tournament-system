@@ -6,6 +6,7 @@ import {Organizer,ErrorNotice} from "@/components/organizer";
 import {supabaseBrowser} from "@/lib/supabase";
 import {useCourtStreams} from "@/lib/use-court-streams";
 import {youtubeWatchUrl} from "@/lib/youtube";
+import BroadcastPreflight from "@/components/broadcast-preflight";
 
 export default function Production(){
  const [links,setLinks]=useState<Record<number,string>>({});
@@ -27,6 +28,7 @@ export default function Production(){
  async function copy(url:string){try{await navigator.clipboard.writeText(url);setCopied(url);}catch{setError("Clipboard unavailable, manually select and copy link.");}}
  return <Organizer title="OBS & YouTube production" subtitle="Private overlays and broadcast setup for three independently streamed courts.">
  {()=> <>
+  <BroadcastPreflight courts={courts}/>
   <div className="panel panel-pad" style={{marginBottom:20}}>
    <div className="row"><Radio color="var(--mint)" size={20}/><h2 className="section-title">Start with a Court 1 test broadcast</h2></div>
    <p className="help-note" style={{marginTop:12}}>OBS sends the video to YouTube; this site embeds the public YouTube watch link. Never put a YouTube stream key into this website. An OBS score link is different from a YouTube stream key.</p>
