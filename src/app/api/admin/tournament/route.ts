@@ -9,6 +9,8 @@ export async function POST(req:NextRequest){try{const check=await staff(req);if(
   return NextResponse.json({tournament:data});
  }
  if(!isUuid(tournamentId))return fail("Invalid tournament");
+ const {data:existingTournament,error:readErr}=await db.from("tournaments").select("name").eq("id",tournamentId).single();if(readErr||!existingTournament)return fail("Tournament not found",404);
+ if(existingTournament.name.startsWith("Mira-Bhayandar Badminton League"))return fail("MBBL uses 9 doubles games with Trump scoring. The legacy 5-rubber fixture generator is disabled until the MBBL game engine and tie-break procedure are activated.",409);
  const funcs:{[key:string]:string}={league:"generate_six_team_league",semis:"generate_team_semifinals",final:"generate_team_final"};if(!funcs[action])return fail("Invalid tournament operation");
  const {data,error}=await db.rpc(funcs[action],{p_tournament_id:tournamentId});if(error)return fail(error.message,409);
  return NextResponse.json({created:data});
