@@ -349,3 +349,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:1160px){.mbbl-roster-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.mbbl-lineup-row{grid-template-columns:150px repeat(2,minmax(0,1fr))}.mbbl-pair-pickers{grid-template-columns:1fr}}
 @media(max-width:820px){.mbbl-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.mbbl-roster-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.mbbl-format-grid{grid-template-columns:1fr}.mbbl-lineup-row{grid-template-columns:1fr}.mbbl-pair-pickers{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:500px){.mbbl-roster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mbbl-team-overview{flex-direction:column;align-items:flex-start}.mbbl-pair-pickers{grid-template-columns:1fr}.mbbl-result-preview{justify-content:flex-start}.mbbl-metrics>div{padding:14px}.mbbl-metrics strong{font-size:29px}}
+
+/* MBBL event discovery and accessible public rules */
+.mbbl-home-banner{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:22px;padding:26px clamp(20px,3vw,33px);border-radius:18px;border:1px solid #396c65;background:radial-gradient(circle at 93% 40%,#488a7044,transparent 42%),linear-gradient(125deg,#12393c,#112135 72%);transition:border-color .2s,transform .2s}
+.mbbl-home-banner:hover{border-color:#91deb1;transform:translateY(-2px)}
+.mbbl-home-banner h2{font:800 clamp(22px,2.7vw,33px) 'Space Grotesk',sans-serif;letter-spacing:-.7px;margin:9px 0}
+.mbbl-home-banner h2 span{color:#91d8bc}
+.mbbl-home-banner p{color:#a0bdc4;line-height:1.65;font-size:12px;margin:0}
+.mbbl-home-banner-right{display:grid;gap:15px;justify-items:end;flex:none}
+.mbbl-home-banner-right>span{color:#b4f3c9;display:flex;align-items:center;gap:9px;font-size:11px;font-weight:850;letter-spacing:1px}
+.mbbl-home-dots{display:flex;align-items:center;gap:7px}.mbbl-home-dots i{height:17px;width:17px;border:2px solid #fff3;border-radius:100%;box-shadow:0 0 12px #0003}
+.mbbl-public-rule-list{padding-left:22px;margin:17px 0 0;color:#b5ced7;font-size:13px;line-height:1.85}
+.mbbl-public-rule-list li+li{margin-top:11px}
+@media(max-width:600px){.mbbl-home-banner{align-items:flex-start;flex-direction:column;padding:21px}.mbbl-home-banner-right{width:100%;justify-items:start}.mbbl-home-dots i{width:14px;height:14px}}
+@media(prefers-reduced-motion:reduce){.mbbl-home-banner{transition:none}}
