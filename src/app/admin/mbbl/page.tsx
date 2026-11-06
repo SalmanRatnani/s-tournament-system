@@ -36,7 +36,7 @@ export default function MBBLAdmin(){
    if(!x.a||!x.b||!Number.isInteger(a)||!Number.isInteger(b)||Math.min(a,b)<0||a===b||Math.max(a,b)!==15){issues.push("Game "+g.number+" must have a clear 15-point winner.");continue;}
    games.push({number:g.number,scoreA:a,scoreB:b,trumpA:trumps.a.includes(g.number),trumpB:trumps.b.includes(g.number)});
   }
-  try{const summary=computeTiePoints(games,[...Array(penalties.a)].map(()=>({side:"a" as Side,reason:"Illustrative umpire penalty",amount:1 as const})),...Array(penalties.b)].map(()=>({side:"b" as Side,reason:"Illustrative umpire penalty",amount:1 as const})));return {games,issues,summary};}
+  try{const deductions=[...Array(penalties.a)].map(()=>({side:"a" as Side,reason:"Illustrative umpire penalty",amount:1 as const})).concat([...Array(penalties.b)].map(()=>({side:"b" as Side,reason:"Illustrative umpire penalty",amount:1 as const})));const summary=computeTiePoints(games,deductions);return {games,issues,summary};}
   catch(e){return {games,issues:[...issues,e instanceof Error?e.message:"Cannot calculate"],summary:null};}
  },[scores,trumps,penalties]);
  const teamA=MBBL_TEAMS[home],teamB=MBBL_TEAMS[away];
