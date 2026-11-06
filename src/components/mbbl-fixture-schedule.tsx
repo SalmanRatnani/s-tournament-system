@@ -11,7 +11,7 @@ type FixtureRow={
  start_local:string;end_local:string;team_a_id:string|null;team_b_id:string|null;
  seed_a:string|null;seed_b:string|null;status:"scheduled"|"delayed"|"cancelled";time_zone:string;
 };
-type TeamRow={id:string;name:string;tournament_id:string|null};
+type TeamRow={id:string;name:string;tournament_id?:string|null};
 const niceTime=(s:string)=>{const [h,m]=s.slice(0,5).split(":").map(Number);return (h%12||12)+":"+String(m).padStart(2,"0")+" "+(h>=12?"PM":"AM");};
 const color=(name:string)=>MBBL_TEAMS.find(t=>t.name===name)?.accent||"#61e6ae";
 const aliases:Record<string,string>={"MB Baddy Group":"MB Baddys","Bad Minions":"Bad Minions"};
