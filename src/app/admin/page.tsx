@@ -10,7 +10,7 @@ export default function Admin(){return <Organizer title="Command center" subtitl
  const steps=[
   {title:"Create the championship",detail:"Set up the official tournament before inviting teams.",href:"/admin/teams",done:data.tournaments.length>0,icon:Trophy},
   {title:"Complete team rosters",detail:"Import the finished auction or register six teams with 18 players each.",href:data.teams.length?"/admin/teams":"/admin/import-auction",done:readyTeams&&readyPlayers,icon:Users},
-  {title:"Prepare league fixtures",detail:"Generate the 15 league ties and assign playable match rubbers.",href:"/admin/fixtures",done:ties.length===15,icon:CalendarDays},
+  {title:"Prepare league fixtures",detail:"Build the official MBBL nine-game ties and verify Trump/relay rules before live play.",href:"/admin/mbbl",done:ties.length===15,icon:CalendarDays},
   {title:"Approve match officials",detail:"Set up referee logins and assign them to individual matches.",href:"/admin/referees",done:data.profiles.some(p=>p.role==="referee")&&data.assignments.length>0,icon:UserRoundCheck}
  ];
  const completed=steps.filter(x=>x.done).length;
@@ -23,6 +23,7 @@ export default function Admin(){return <Organizer title="Command center" subtitl
   </section>
   <div className="launch-section-head" style={{marginTop:34}}><div><div className="eyebrow">ON MATCH DAY</div><h2 className="launch-section-title">Production & operations</h2></div></div>
   <div className="grid cols-3 controller-operations">
+   <Link className="launch-discover-card" href="/admin/mbbl"><span className="launch-discover-icon"><Trophy size={24}/></span><span className="launch-discover-tag">MBBL SEASON 1</span><strong>9-game match desk</strong><p>Plan category-locked doubles pairs, independent Trump picks and tie-point outcomes.</p><ArrowRight size={17}/></Link>
    <Link className="launch-discover-card" href="/admin/viewer-links"><span className="launch-discover-icon"><Radio size={24}/></span><span className="launch-discover-tag">PUBLIC BROADCASTING</span><strong>Viewer links & YouTube</strong><p>Connect the court streams and share one spectator destination.</p><ArrowRight size={17}/></Link>
    <Link className="launch-discover-card" href="/admin/production"><span className="launch-discover-icon"><Clapperboard size={24}/></span><span className="launch-discover-tag">PRIVATE PRODUCTION</span><strong>OBS overlays</strong><p>Create signed scoreboard graphics for all three court broadcasts.</p><ArrowRight size={17}/></Link>
    <Link className="launch-discover-card" href="/admin/scoring-rules"><span className="launch-discover-icon"><Settings2 size={24}/></span><span className="launch-discover-tag">COMPETITION STANDARDS</span><strong>Scoring format</strong><p>Confirm the game length, match format and victory conditions.</p><ArrowRight size={17}/></Link>

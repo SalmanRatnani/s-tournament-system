@@ -301,3 +301,51 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .broadcast-modes{border-top:1px solid #2b4552;margin-top:23px;padding-top:22px}
 @media(max-width:850px){.broadcast-preflight-layout{grid-template-columns:1fr}.broadcast-setup-side{padding:16px}}
 @media(prefers-reduced-motion:reduce){.broadcast-progress span,.broadcast-step{transition:none}}
+
+/* MBBL Season 1: event brand pages, category roster and operator planning desk */
+.mbbl-page{max-width:1440px}
+.mbbl-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
+.mbbl-metrics>div{padding:21px;border:1px solid #344757;border-radius:16px;background:linear-gradient(150deg,#182b3c,#101c2c);display:flex;flex-direction:column;gap:7px}
+.mbbl-metrics strong{font:800 37px 'Space Grotesk',sans-serif;color:#f6faff}.mbbl-metrics span{font-size:11px;color:#99b2c5}
+.mbbl-team-selector{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.mbbl-team-button{display:inline-flex;align-items:center;gap:9px;min-height:43px;padding:11px 13px;background:#132237;border:1px solid #344559;color:#d8e6ef;border-radius:12px;font-size:11px;font-weight:800}
+.mbbl-team-button.active{background:#203746;box-shadow:0 0 0 1px #ffffff18}.mbbl-team-button:hover{border-color:#9eb4c3}
+.mbbl-small-badge{width:9px;height:9px;flex-shrink:0;border-radius:50%;box-shadow:0 0 10px currentColor}
+.mbbl-team-detail{border:1px solid var(--team-accent,#547690);border-radius:22px;padding:clamp(17px,3vw,35px);background:radial-gradient(ellipse at 91% 3%,color-mix(in srgb,var(--team-accent) 16%,transparent),transparent 40%),#101f2f}
+.mbbl-team-overview{display:flex;align-items:center;gap:26px;margin-bottom:25px}
+.mbbl-team-overview h2{font:800 clamp(28px,4vw,46px)/1.2 'Space Grotesk',sans-serif;margin:8px 0}
+.mbbl-team-overview p{font-size:13px;color:#aac4cc;line-height:1.8;margin:4px 0}
+.mbbl-team-overview p strong{color:#f3faff}
+.mbbl-team-crest{min-width:142px;width:142px;height:142px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:3px solid;border-radius:28px 28px 56px 56px;background:#071524;position:relative;gap:4px}
+.mbbl-team-crest strong{font:800 54px 'Space Grotesk',sans-serif;color:white;line-height:1}.mbbl-team-crest small{font-size:8px;color:#c6dbe5;letter-spacing:1px;line-height:1.2;padding:0 5px}
+.mbbl-crest-shuttle{position:absolute;top:-12px;right:-10px;font-size:24px;filter:drop-shadow(0 1px 3px #000)}
+.mbbl-roster-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.mbbl-player-tile{border:1px solid #405364;border-radius:11px;min-height:82px;position:relative;background:#f9fcff;color:#0a1425;padding:23px 9px 8px;text-align:center;display:grid;place-items:center}
+.mbbl-player-tile strong{font-weight:900;font-size:12px;line-height:1.18;overflow-wrap:anywhere;text-transform:uppercase}
+.mbbl-player-cat{position:absolute;top:-7px;left:15%;right:15%;border-radius:20px;background:var(--team-accent,#70bfd4);color:#09111d;font-size:11px;font-weight:900;letter-spacing:.4px;padding:3px 4px;line-height:1.1}
+.mbbl-format-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:17px}
+.mbbl-format-grid>div{border:1px solid #30485b;padding:18px;border-radius:15px;background:#142536}
+.mbbl-format-grid svg{display:block;margin-bottom:12px}.mbbl-format-grid strong{font-size:14px}.mbbl-format-grid p{font-size:11px;line-height:1.7;color:#a1b8c8;margin:10px 0 0}
+.mbbl-rule-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.mbbl-rule-pills span{padding:8px 11px;border-radius:7px;border:1px solid #365363;color:#bbd7e3;font-size:11px;background:#142b3c}
+.mbbl-warning{display:flex;align-items:flex-start;gap:12px}.mbbl-warning svg{flex-shrink:0;color:#ffc374}.mbbl-warning p{margin:8px 0 0}
+.mbbl-lineup-grid{display:grid;gap:11px;margin-top:21px}
+.mbbl-lineup-row{display:grid;grid-template-columns:185px repeat(2,minmax(0,1fr));gap:13px;align-items:stretch;border:1px solid #284657;background:#102131;border-radius:14px;padding:11px}
+.mbbl-game-heading{display:flex;align-items:center;gap:10px}
+.mbbl-game-number{font:800 25px 'Space Grotesk',sans-serif;color:#95ebbd}
+.mbbl-game-heading strong{font-size:13px;display:block}.mbbl-game-heading small{font-size:10px;display:block;line-height:1.5;color:#90aabb;margin-top:5px}
+.mbbl-pair-entry{display:flex;flex-direction:column;gap:7px;padding:7px 10px;border:1px solid #304b56;border-radius:10px;background:#172b38}
+.mbbl-pair-side{font-size:10px;color:#97d5b2;letter-spacing:.25px;font-weight:800}
+.mbbl-pair-pickers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.mbbl-pair-pickers .input{font-size:11px;width:100%;padding:10px 7px}
+.mbbl-trump-btn{align-self:flex-start;min-width:110px;font-size:10px;min-height:33px}
+.mbbl-score-input{max-width:82px;min-width:62px;text-align:center}
+.mbbl-trump-mark{display:block;color:#f5cb74}
+.mbbl-penalty-control{border:1px solid #334d5a;padding:15px;border-radius:12px;background:#122637}
+.mbbl-result-preview{display:flex;justify-content:space-around;gap:20px;flex-wrap:wrap;align-items:center;margin-top:19px;padding:21px;border:1px solid #518575;border-radius:14px;background:linear-gradient(110deg,#193c39,#14293a)}
+.mbbl-result-preview>div>strong{font:800 34px 'Space Grotesk',sans-serif}
+.mbbl-preview-score{font:800 45px 'Space Grotesk',sans-serif}.mbbl-preview-score span{color:#78c89c}
+.mbbl-result-preview p{margin:7px 0 0;font-size:12px;color:#aec1cf}
+@media(max-width:1160px){.mbbl-roster-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.mbbl-lineup-row{grid-template-columns:150px repeat(2,minmax(0,1fr))}.mbbl-pair-pickers{grid-template-columns:1fr}}
+@media(max-width:820px){.mbbl-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.mbbl-roster-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.mbbl-format-grid{grid-template-columns:1fr}.mbbl-lineup-row{grid-template-columns:1fr}.mbbl-pair-pickers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.mbbl-roster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mbbl-team-overview{flex-direction:column;align-items:flex-start}.mbbl-pair-pickers{grid-template-columns:1fr}.mbbl-result-preview{justify-content:flex-start}.mbbl-metrics>div{padding:14px}.mbbl-metrics strong{font-size:29px}}

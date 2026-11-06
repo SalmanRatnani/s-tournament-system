@@ -7,6 +7,8 @@ export async function POST(req:NextRequest){try{const check=await staff(req);if(
  if(new Set(sideA).size!==required||new Set(sideB).size!==required)return fail("Duplicate player selection");
  const db=check.auth.db;
  const {data:tie,error:tieErr}=await db.from("matches").select("*").eq("id",tieId).single();if(tieErr||!tie||tie.kind!=="team_tie"||tie.status==="completed")return fail("Team tie unavailable",409);
+ const {data:tournament}=await db.from("tournaments").select("name").eq("id",tie.tournament_id).single();
+ if(tournament?.name.startsWith("Mira-Bhayandar Badminton League"))return fail("Use the MBBL 9-game category-pair workflow; legacy 5-rubber creation is disabled.",409);
  const [{data:teamA},{data:teamB},{count}]=await Promise.all([db.from("players").select("name").eq("team_id",tie.team_a_id),db.from("players").select("name").eq("team_id",tie.team_b_id),db.from("matches").select("id",{head:true,count:"exact"}).eq("tie_id",tieId)]);
  if((count||0)>=5)return fail("Team tie already has five rubbers",409);
  if(!sideA.every((n:string)=>teamA?.some(p=>p.name===n))||!sideB.every((n:string)=>teamB?.some(p=>p.name===n)))return fail("Players must belong to their respective team rosters",403);

@@ -8,6 +8,7 @@ export default function ScoringRulesPage(){
  const [error,setError]=useState("");const [success,setSuccess]=useState("");const [working,setWorking]=useState(false);
  return <Organizer title="Game rules & set format" subtitle="Configure every new singles and doubles rubber; changing rules also updates any unstarted rubbers.">{({data,post})=>{
   const tid=data?.tournaments[0]?.id||"";
+  if(data?.tournaments[0]?.name?.startsWith("Mira-Bhayandar Badminton League"))return <div className="panel panel-pad"><h2 className="section-title">MBBL Season 1 official rules</h2><p className="subline">Nine compulsory doubles games, one 15-point game each, independent Trump Game scoring, overall-point standings, relay tie-breaks and official replacement policy. The generic configurable best-of-three scoring controls do not apply to this event.</p><a href="/admin/mbbl" className="btn btn-primary">Open MBBL match desk</a></div>;
   const stored=data?.rules?.find(r=>r.tournament_id===tid);
   // Synchronize only when an organizer loads a different tournament.
   if(tid&&tid!==currentId){queueMicrotask(()=>{setCurrentId(tid);if(stored)setRules({best_of:stored.default_best_of as 1|3,winning_score:stored.default_winning_score,win_by_two:stored.default_win_by_two,point_cap:stored.default_point_cap})})}
