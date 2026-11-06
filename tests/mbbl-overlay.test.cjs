@@ -6,9 +6,9 @@ const vm=require("node:vm");
 const ts=require("typescript");
 const file=fs.readFileSync(path.join(process.cwd(),"src/lib/mbbl/overlay-display.ts"),"utf8");
 const compiled=ts.transpileModule(file,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
-const exports={};
-vm.runInNewContext(compiled,{exports,module:{exports},require:(id)=>id==="./fixtures"?{MBBL_EVENT_DATE:"2026-11-22",MBBL_TIMEZONE:"Asia/Kolkata"}:(()=>{throw Error(id)})(),Intl,Date},{filename:"overlay-display.ts"});
-const {chooseMBBLOverlaySlot,formatSlotTime,slotHeading}=exports;
+const output={};
+vm.runInNewContext(compiled,{exports:output,module:{exports:output},require:(id)=>id==="./fixtures"?{MBBL_EVENT_DATE:"2026-11-22",MBBL_TIMEZONE:"Asia/Kolkata"}:(()=>{throw Error(id)})(),Intl,Date},{filename:"overlay-display.ts"});
+const {chooseMBBLOverlaySlot,formatSlotTime,slotHeading}=output;
 const slots=[
  {id:"a",stage:"league",round_no:1,start_local:"08:30:00",end_local:"10:00:00",court_id:1,status:"scheduled"},
  {id:"b",stage:"league",round_no:2,start_local:"10:00:00",end_local:"11:30:00",court_id:1,status:"scheduled"},
