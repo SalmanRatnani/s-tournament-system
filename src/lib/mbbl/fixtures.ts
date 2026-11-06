@@ -1,10 +1,13 @@
 /** Official schedule transcribed from the organiser-supplied MBBL Season 1 poster.
- * Date is not provided in the image. Times are India local (Asia/Kolkata), not UTC.
+ * Event date 22 November 2026 was separately confirmed by the organiser.
+ * Times are India local (Asia/Kolkata), not UTC.
  * This catalogue is a cross-check for the persisted schedule, NOT scoreable matches.
  */
 export type ScheduledPair={court:1|2|3;home:string;away:string};
 export type LeagueRound={round:1|2|3|4|5;start:string;end:string;matches:readonly ScheduledPair[]};
 export const MBBL_TIMEZONE="Asia/Kolkata";
+export const MBBL_EVENT_DATE="2026-11-22" as const;
+export const MBBL_EVENT_DATE_LABEL="Sunday, 22 November 2026" as const;
 export const MBBL_LEAGUE_ROUNDS:readonly LeagueRound[]=[
  {round:1,start:"08:30",end:"10:00",matches:[
   {court:1,home:"tsar-strikers",away:"mb-baddy-group"},

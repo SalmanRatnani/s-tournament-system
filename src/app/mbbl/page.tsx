@@ -4,6 +4,7 @@ import Link from "next/link";
 import {ChevronRight,Users,Trophy,ShieldCheck,BookOpen,ArrowUpRight} from "lucide-react";
 import {Shell,PageHeading} from "@/components/shell";
 import {MBBL_TEAMS,MBBL_SEASON_NAME,MBBL_CATEGORY_ORDER} from "@/lib/mbbl/catalog";
+import {MBBL_EVENT_DATE_LABEL} from "@/lib/mbbl/fixtures";
 import {CATEGORY_GROUPS,REPLACEMENTS,TRUMP_COUNTS} from "@/lib/mbbl/rules";
 import {useTournamentPublic} from "@/lib/use-tournament-public";
 function Badge({slug,accent,name}:{slug:string;accent:string;name:string}){return <div className="mbbl-team-crest" style={{borderColor:accent,boxShadow:"inset 0 0 55px "+accent+"33"}} aria-label={name+" team colour"}>
@@ -17,7 +18,7 @@ export default function MBBLPage(){
  const inDb=registeredTeams.find(t=>t.name.toLowerCase()===team.name.toLowerCase());
  const savedCount=inDb?registeredPlayers.filter(p=>p.team_id===inDb.id).length:0;
  return <Shell mode="public" title="MBBL SEASON 1"><div className="content animate-in mbbl-page">
-  <PageHeading eyebrow="VANS SPORTS EVENTS · SEASON 1" title={MBBL_SEASON_NAME} subtitle="Six squads. 108 registered players. Nine doubles games per tie. Official team announcement rosters and competition rules." actions={<Link className="btn" href="/live">View live courts <ArrowUpRight size={15}/></Link>}/>
+  <PageHeading eyebrow="VANS SPORTS EVENTS · SEASON 1" title={MBBL_SEASON_NAME} subtitle={MBBL_EVENT_DATE_LABEL+" · Six squads. 108 registered players. Nine doubles games per tie."} actions={<Link className="btn" href="/live">View live courts <ArrowUpRight size={15}/></Link>}/>
   <div className="mbbl-metrics"><div><strong>06</strong><span>Franchises</span></div><div><strong>108</strong><span>Players</span></div><div><strong>09</strong><span>Doubles games / tie</span></div><div><strong>15</strong><span>League ties</span></div></div>
   {error&&<div className="error" role="alert">{error}</div>}
   <div className="mbbl-team-selector" role="group" aria-label="Choose a team">{MBBL_TEAMS.map(t=><button key={t.slug} type="button" className={"mbbl-team-button"+(selected===t.slug?" active":"")} onClick={()=>setSelected(t.slug)} style={{borderColor:selected===t.slug?t.accent:undefined}}><span className="mbbl-small-badge" style={{background:t.accent}}/>{t.name}</button>)}</div>
