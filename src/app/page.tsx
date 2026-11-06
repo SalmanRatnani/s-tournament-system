@@ -6,6 +6,7 @@ import {CourtCard} from "@/components/court-card";
 import {useMatches} from "@/lib/use-matches";
 import {useCourtStreams} from "@/lib/use-court-streams";
 import {MBBL_TEAMS} from "@/lib/mbbl/catalog";
+import {MBBL_EVENT_DATE_LABEL} from "@/lib/mbbl/fixtures";
 import type {Match} from "@/lib/types";
 
 const courtIds=[1,2,3] as const;
@@ -39,7 +40,7 @@ export default function Home(){
     </div>
    </section>
    <div className="launch-trustline"><span><span className="signal-dot"/> {active.length?active.length+" matches on court":"Awaiting first serve"}</span><span>LIVE SCORES & RESULTS</span><span>{linked} / 3 BROADCASTS CONNECTED</span></div>
-   <Link className="mbbl-home-banner" href="/mbbl"><div><span className="eyebrow">VANS SPORTS EVENTS · MIRA-BHAYANDAR BADMINTON LEAGUE</span><h2>MBBL Season 1 <span>— meet the six teams</span></h2><p>108 registered players. Official category rosters. Nine-game tie format and Trump Game rules.</p></div><div className="mbbl-home-banner-right"><div className="mbbl-home-dots">{MBBL_TEAMS.map(t=><i key={t.slug} title={t.name} style={{background:t.accent}} />)}</div><span>EXPLORE EVENT <ArrowRight size={16}/></span></div></Link>
+   <Link className="mbbl-home-banner" href="/mbbl"><div><span className="eyebrow">VANS SPORTS EVENTS · MIRA-BHAYANDAR BADMINTON LEAGUE</span><h2>MBBL Season 1 <span>— meet the six teams</span></h2><p>{MBBL_EVENT_DATE_LABEL} · 108 registered players. Official category rosters and Trump Game rules.</p></div><div className="mbbl-home-banner-right"><div className="mbbl-home-dots">{MBBL_TEAMS.map(t=><i key={t.slug} title={t.name} style={{background:t.accent}} />)}</div><span>EXPLORE EVENT <ArrowRight size={16}/></span></div></Link>
    <section aria-labelledby="home-stats" className="launch-stats-section">
     <h2 id="home-stats" className="sr-only">Tournament at a glance</h2>
     <div className="launch-metrics">
