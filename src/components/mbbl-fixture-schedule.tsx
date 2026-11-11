@@ -1,37 +1,23 @@
 "use client";
-import {Fragment,useEffect,useMemo,useState} from "react";
+import {Fragment,useMemo} from "react";
 import Link from "next/link";
 import {ArrowUpRight,CalendarDays,Clock3,MapPin,Trophy} from "lucide-react";
-import {supabaseBrowser} from "@/lib/supabase";
+import {usePublicScoreboard} from "@/lib/use-public-scoreboard";
 import {MBBL_EVENT_DATE_LABEL,MBBL_LEAGUE_ROUNDS,MBBL_NON_MATCH_SCHEDULE} from "@/lib/mbbl/fixtures";
 import {MBBL_TEAMS} from "@/lib/mbbl/catalog";
 
-type FixtureRow={
- id:string;stage:"league"|"semifinal"|"final";round_no:number|null;court_id:number|null;
- start_local:string;end_local:string;team_a_id:string|null;team_b_id:string|null;
- seed_a:string|null;seed_b:string|null;status:"scheduled"|"delayed"|"cancelled";time_zone:string;
-};
+import type {MBBLFixtureSlot as FixtureRow} from "@/lib/mbbl/overlay-display";
 type TeamRow={id:string;name:string;tournament_id?:string|null};
 const niceTime=(s:string)=>{const [h,m]=s.slice(0,5).split(":").map(Number);return (h%12||12)+":"+String(m).padStart(2,"0")+" "+(h>=12?"PM":"AM");};
 const color=(name:string)=>MBBL_TEAMS.find(t=>t.name===name)?.accent||"#61e6ae";
 const aliases:Record<string,string>={"MB Baddy Group":"MB Baddys","Bad Minions":"Bad Minions"};
 function TeamLabel({name}:{name:string}){return <span className="mbbl-fixture-name"><span className="mbbl-fixture-dot" style={{background:color(name)}}/>{aliases[name]||name}</span>;}
 export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
- const [slots,setSlots]=useState<FixtureRow[]>([]),[loading,setLoading]=useState(true),[error,setError]=useState("");
+ const feed=usePublicScoreboard(12000);
  const eventId=teams.find(t=>MBBL_TEAMS.some(v=>v.name===t.name))?.tournament_id;
- useEffect(()=>{
-  if(!eventId){setError("MBBL tournament registration not available");setLoading(false);return;}
-  const db=supabaseBrowser();if(!db){setError("Tournament connection unavailable");setLoading(false);return;}
-  let active=true;
-  const refresh=async()=>{
-   const {data,error:e}=await db.from("event_fixture_slots").select("id,stage,round_no,court_id,start_local,end_local,team_a_id,team_b_id,seed_a,seed_b,status,time_zone").eq("tournament_id",eventId).eq("published",true).order("start_local").order("court_id",{ascending:true});
-   if(!active)return;
-   if(e)setError(e.message);else{setSlots((data||[]) as FixtureRow[]);setError("");}
-   setLoading(false);
-  };
-  void refresh();const timer=setInterval(()=>void refresh(),30000);
-  return()=>{active=false;clearInterval(timer);};
- },[eventId]);
+ const slots=feed.fixtures.filter(s=>s.tournament_id===eventId);
+ const loading=feed.loading;
+ const error=feed.error;
  const byId=useMemo(()=>new Map(teams.map(t=>[t.id,t.name])),[teams]);
  const league=slots.filter(x=>x.stage==="league");
  const semifinals=slots.filter(x=>x.stage==="semifinal");
