@@ -423,3 +423,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .mbbl-obs-accent{height:4px;background:linear-gradient(90deg,#24dbea,#4189fd,#8b5df9,#f9b63d)}
 @media(max-width:800px){.mbbl-obs-panel{left:3vw;bottom:4vh;max-width:94vw}.mbbl-obs-team strong{font-size:clamp(15px,3.4vw,26px)}.mbbl-obs-brand strong{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.mbbl-obs-panel,.mbbl-obs-team{animation:none!important;transition:none!important}}
+
+/* Assigned MBBL referee: outdoor readable, finger-sized scoring controls */
+.mbbl-live-console{border-color:#336d67;background:linear-gradient(145deg,#122d37,#101c30)}
+.mbbl-live-score-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:19px}
+.mbbl-live-score-side{min-width:0;display:flex;flex-direction:column;align-items:center;gap:15px;border:1px solid #385568;background:#10263b;border-radius:17px;padding:22px 14px;text-align:center}
+.mbbl-live-team{min-height:47px;display:grid;align-items:center;font-size:clamp(14px,2vw,20px);line-height:1.4;overflow-wrap:anywhere}
+.mbbl-live-score{font:800 clamp(70px,11vw,132px)/1 'Space Grotesk',sans-serif;color:#a7ffce;letter-spacing:-3px;font-variant-numeric:tabular-nums}
+.mbbl-live-score-side button{width:100%;min-height:53px;touch-action:manipulation}
+.mbbl-live-score-side .btn-primary{min-height:68px;font-size:18px;font-weight:900}
+.mbbl-live-overall{border-radius:14px;border:1px solid #446e6a;background:#173835;margin-top:20px;padding:18px;text-align:center}
+.mbbl-live-overall strong{font-size:12px;color:#b7e8d0}.mbbl-live-overall>div{font:850 34px 'Space Grotesk',sans-serif;margin-top:8px}.mbbl-live-overall span{color:#75dca7}
+@media(max-width:650px){.mbbl-live-score-grid{gap:7px}.mbbl-live-score-side{padding:15px 8px;gap:12px}.mbbl-live-score{font-size:clamp(65px,16vw,100px)}.mbbl-live-team{font-size:13px}.mbbl-live-score-side .btn-primary{min-height:70px;font-size:15px}}
