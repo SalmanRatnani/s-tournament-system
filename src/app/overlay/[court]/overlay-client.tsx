@@ -19,8 +19,9 @@ export default function OverlayClient({court}:{court:number}){
   return()=>{document.body.classList.remove("overlay-body");clearInterval(ticker);};
  },[]);
  const relevant=feed.fixtures.filter(f=>f.court_id===court);
+ const mbblPriority:Record<string,number>={live:0,paused:1,awaiting_relay:2,completed:3};
  const active=feed.mbblTies.filter(t=>t.court_id===court)
-  .sort((a,b)=>({live:0,paused:1,awaiting_relay:2,completed:3}[a.status]??4)-({live:0,paused:1,awaiting_relay:2,completed:3}[b.status]??4))[0];
+  .sort((a,b)=>(mbblPriority[a.status]??4)-(mbblPriority[b.status]??4))[0];
  const selected=chooseMBBLOverlaySlot(relevant,now);
  const fixture=active?relevant.find(f=>f.id===active.fixture_slot_id)||selected.slot:selected.slot;
  const activeGame=active?.games.find(g=>g.game_number===active.active_game);
