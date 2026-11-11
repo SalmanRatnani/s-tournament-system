@@ -23,7 +23,8 @@ export async function GET(){
    db.from("event_fixture_slots").select("id,tournament_id,stage,round_no,court_id,start_local,end_local,team_a_id,team_b_id,seed_a,seed_b,status").eq("published",true).limit(100),
    db.from("teams").select("id,name,tournament_id").limit(120)
   ]);
-  const error=match.error||courts.error||fixtures.error||teams.error;
+  const {data:players,error:playersError}=await db.from("players").select("id,team_id,name,player_code,category,image_url,image_filename,auction_amount,is_captain,is_playing_captain").limit(500);
+  const error=match.error||courts.error||fixtures.error||teams.error||playersError;
   if(error)throw Error("Public score source unavailable");
   // Do not expose a game until the owner has explicitly activated the tie.
   const fixtureIds=(fixtures.data||[]).map(f=>f.id);
@@ -38,7 +39,7 @@ export async function GET(){
   if(games.error)throw Error("MBBL game feed temporarily unavailable");
   return NextResponse.json({
    matches:match.data||[],courts:courts.data||[],
-   fixtures:fixtures.data||[],teams:teams.data||[],
+   fixtures:fixtures.data||[],teams:teams.data||[],players:players||[],
    mbblTies:(mbbl.data||[]).map(t=>({...t,games:(games.data||[]).filter(g=>g.tie_id===t.id)
     // Trump decisions remain private until the corresponding game starts.
      .map(g=>g.status==="pending"?{...g,trump_a:null,trump_b:null}:g)}))
