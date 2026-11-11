@@ -6,7 +6,7 @@ export async function GET(req:NextRequest){
  if("failure" in access)return access.failure;
  const db=access.auth.db;
  const [ties,profiles,assignments,teams]=await Promise.all([
-  db.from("mbbl_ties").select("id,court_id,team_a_id,team_b_id,status,active_game").order("court_id").limit(100),
+  db.from("mbbl_ties").select("id,court_id,team_a_id,team_b_id,status,active_game,score_a,score_b,overall_a,overall_b,version").order("court_id").limit(100),
   db.from("profiles").select("id,display_name,role").eq("role","referee").limit(50),
   db.from("mbbl_referee_assignments").select("tie_id,user_id").limit(150),
   db.from("teams").select("id,name").limit(120)
