@@ -435,3 +435,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .mbbl-live-overall{border-radius:14px;border:1px solid #446e6a;background:#173835;margin-top:20px;padding:18px;text-align:center}
 .mbbl-live-overall strong{font-size:12px;color:#b7e8d0}.mbbl-live-overall>div{font:850 34px 'Space Grotesk',sans-serif;margin-top:8px}.mbbl-live-overall span{color:#75dca7}
 @media(max-width:650px){.mbbl-live-score-grid{gap:7px}.mbbl-live-score-side{padding:15px 8px;gap:12px}.mbbl-live-score{font-size:clamp(65px,16vw,100px)}.mbbl-live-team{font-size:13px}.mbbl-live-score-side .btn-primary{min-height:70px;font-size:15px}}
+
+/* MBBL official game preparation and referee approvals */
+.mbbl-prep-grid{margin:20px 0;display:grid;gap:0;border:1px solid #314d60;border-radius:15px;overflow:hidden}
+.mbbl-prep-heading,.mbbl-prep-row{display:grid;grid-template-columns:170px 1fr 1fr;gap:12px;align-items:start}
+.mbbl-prep-heading{background:#234358;color:#c8f7e2;font-size:11px;font-weight:850;letter-spacing:.4px;padding:16px}
+.mbbl-prep-row{background:#112339;padding:13px 14px;border-top:1px solid #2b4356}
+.mbbl-prep-row:nth-child(2n){background:#14283b}
+.mbbl-prep-row>div:first-child>strong{font-size:12px;color:#91ebba}
+.mbbl-prep-row p{color:#9fb3c6;font-size:11px;margin:7px 0 0;line-height:1.6}
+.mbbl-prep-pair{display:flex;flex-direction:column;gap:7px;min-width:0}
+.mbbl-prep-pair select{max-width:100%;min-width:0;font-size:11px}
+.mbbl-prep-pair .btn{align-self:flex-start;font-size:10px}
+.mbbl-prep-check{display:flex;gap:14px;justify-content:space-around;flex-wrap:wrap;border:1px solid #406459;border-radius:12px;padding:13px;background:#17372d;color:#bcf7d3;font-size:12px;margin-bottom:16px}
+.mbbl-prep-confirm{display:flex;align-items:flex-start;gap:13px;margin:19px 0;padding:14px;border-radius:11px;background:#1b2b39;border:1px solid #3b5462;color:#c8dbe4;font-size:12px;line-height:1.7;cursor:pointer}
+.mbbl-prep-confirm input{margin-top:3px;width:19px;height:19px;flex:none;accent-color:#7bdc9d}
+.mbbl-ref-assignment-list{display:grid;gap:12px}
+.mbbl-ref-assign-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:19px;border-radius:13px;background:#13263b;border:1px solid #345466}
+.mbbl-ref-assign-row h3{font-size:17px;line-height:1.4;margin:8px 0}
+.mbbl-ref-buttons{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+@media(max-width:800px){.mbbl-prep-heading{display:none}.mbbl-prep-row{grid-template-columns:1fr}.mbbl-prep-pair{border-top:1px solid #304a59;padding-top:11px}}
