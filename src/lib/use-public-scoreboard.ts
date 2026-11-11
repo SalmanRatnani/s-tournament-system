@@ -39,7 +39,7 @@ export function usePublicScoreboard(refreshMs=5000){
    if(busy||document.visibilityState==="hidden")return;
    busy=true;
    try{
-    const res=await fetch("/api/public/scoreboard",{cache:"no-store"});
+    const res=await fetch("/api/public/scoreboard");
     if(!res.ok)throw Error("Public feed temporarily unavailable");
     const data=(await res.json()) as PublicScoreSnapshot;
     if(active){setState(data);setError("");}
