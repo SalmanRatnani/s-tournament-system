@@ -40,7 +40,7 @@ const operations: NavLink[] = [
   { to: "/admin/import-auction", label: "Auction import", Icon: FileUp },
   { to: "/admin/production", label: "OBS production", Icon: Clapperboard },
 ];
-const refereeLinks: NavLink[] = [{ to: "/referee", label: "Referee scoring", Icon: UserRoundCheck }];
+const refereeLinks: NavLink[] = [{ to: "/referee", label: "Standard scoring", Icon: UserRoundCheck },{ to: "/referee/mbbl", label: "MBBL 9-game scoring", Icon: Trophy }];
 const publicQuickLinks = discover.slice(1, 5);
 
 function Brand({ compact = false }: { compact?: boolean }) {
