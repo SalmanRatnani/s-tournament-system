@@ -3,7 +3,7 @@ import {useMemo,useState} from "react";
 import Link from "next/link";
 import {AlertTriangle,ArrowLeft,CheckCircle2,FileCheck2,LockKeyhole,ShieldCheck} from "lucide-react";
 import {Organizer} from "@/components/organizer";
-import {usePublicScoreboard} from "@/lib/use-public-scoreboard";
+import {usePublicEvent} from "@/lib/use-public-scoreboard";
 import {MBBL_CATEGORY_ORDER,type MBBLCategory} from "@/lib/mbbl/catalog";
 import {CATEGORY_GROUPS,validateNinePairs,validateTrumpSelections,type PairSelection} from "@/lib/mbbl/rules";
 import {supabaseBrowser} from "@/lib/supabase";
@@ -14,7 +14,7 @@ const initial:Entry[]=([
  ["C3","C4"],["K1","K2"],["W1","W2"],["G1","B5"]
 ] as [MBBLCategory,MBBLCategory][]).map((pair,i)=>({game:i+1,a:[...pair],b:[...pair]}));
 export default function MBBLPrepare(){
- const feed=usePublicScoreboard(15000);
+ const feed=usePublicEvent();
  const fixtures=feed.fixtures.filter(f=>f.stage==="league"&&f.team_a_id&&f.team_b_id).sort((a,b)=>Number(a.round_no)-Number(b.round_no)||Number(a.court_id)-Number(b.court_id));
  const [fixtureId,setFixtureId]=useState(""),[entries,setEntries]=useState<Entry[]>(initial);
  const [trumpA,setTrumpA]=useState<number[]>([]),[trumpB,setTrumpB]=useState<number[]>([]);
@@ -47,7 +47,7 @@ export default function MBBLPrepare(){
     body:JSON.stringify({fixtureId:fixture.id,pairs:entries,trumpA,trumpB})});
    const data=await res.json();
    if(!res.ok)throw Error(data.error||"Could not prepare team tie");
-   setSuccess("Official tie saved. It remains in READY state—scoring is still blocked until rules are confirmed.");
+   setSuccess("Official tie saved in READY state. Assign a referee, then start the game from Referee assignments. Games use two-point deuce after 14–14.");
    setConfirmed(false);
   }catch(e){setError(e instanceof Error?e.message:"Unable to prepare game");}
   finally{setBusy(false);}

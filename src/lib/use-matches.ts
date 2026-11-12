@@ -19,7 +19,7 @@ export function useMatches(){
   channel?.addEventListener("message",update);
   return()=>{window.removeEventListener("storage",onStorage);window.removeEventListener("demo-score-change",update);channel?.close();};
  },[]);
- return {matches:demoEnabled?demoMatches:publicFeed.matches,loading:publicFeed.loading,error:publicFeed.error,refreshDemo:()=>setDemoMatches([...getDemoMatches()])};
+ return {matches:demoEnabled?demoMatches:publicFeed.matches,loading:publicFeed.loading,error:publicFeed.error,refresh:publicFeed.refresh,refreshDemo:()=>setDemoMatches([...getDemoMatches()])};
 }
 /** Referees have few connections and need immediate authenticated score updates. */
 export function useOfficialMatches(){

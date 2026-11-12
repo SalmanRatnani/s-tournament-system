@@ -84,7 +84,10 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
   const [authReady, setAuthReady] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const staffRoute = mode === "workspace" || /^\/(admin|referee|account|login|register|auth)(\/|$)/.test(path);
   useEffect(() => {
+    // Public pages never open an Auth session or query profiles per spectator.
+    if (!staffRoute || mode === "public") { setEmail(""); setRole("viewer"); setAuthReady(true); return; }
     const db = supabaseBrowser();
     if (!db) { setAuthReady(true); return; }
     let active = true;
@@ -92,6 +95,8 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
     const refresh = async () => {
       const request = ++sequence;
       try {
+        const { data: { session } } = await db.auth.getSession();
+        if (!session) { if (active) { setEmail(""); setRole("viewer"); setAuthReady(true); } return; }
         const { data: { user } } = await db.auth.getUser();
         if (!active || request !== sequence) return;
         if (!user) { setEmail(""); setRole("viewer"); setAuthReady(true); return; }
@@ -105,9 +110,9 @@ export function Shell({ children, title = "TOURNAMENT", mode = "auto" }: {
       } finally { if (active && request === sequence) setAuthReady(true); }
     };
     void refresh();
-    const { data: { subscription } } = db.auth.onAuthStateChange(() => { void refresh(); });
+    const { data: { subscription } } = db.auth.onAuthStateChange(() => { setTimeout(() => void refresh(), 0); });
     return () => { active = false; subscription.unsubscribe(); };
-  }, []);
+  }, [staffRoute, mode]);
   useEffect(() => { setMenuOpen(false); }, [path]);
   useEffect(() => {
     try { setCollapsed(localStorage.getItem("st.sidebar.collapsed") === "true"); } catch { /* optional preference */ }

@@ -82,3 +82,16 @@ test("knockout relay stages change at first side reaching 10,20,30",()=>{
  assert.equal(rules.relayStage(13,20),2);
  assert.equal(rules.relayStage(30,27),3);
 });
+test("14-all uses two-point deuce, including beyond 30; no golden point",()=>{
+ for(const [a,b] of [[14,14],[15,14],[15,15],[30,29],[30,30],[31,30]])assert.equal(rules.mbblGameWinner(a,b),null,`${a}-${b}`);
+ for(const [a,b,winner] of [[15,13,"a"],[14,16,"b"],[17,15,"a"],[31,29,"a"],[30,32,"b"]]){
+  assert.equal(rules.mbblGameWinner(a,b),winner);assert.equal(rules.isMBBLFinalScore(a,b),true);
+ }
+ assert.equal(rules.isMBBLFinalScore(16,12),false,"cannot continue after an earlier winning rally");
+ assert.equal(rules.mbblGameWinner(-1,15),null);
+});
+test("Trump totals accept a deuce winner and reject a 15-14 golden point",()=>{
+ const g={number:1,scoreA:18,scoreB:16,trumpA:true,trumpB:false};
+ assert.equal(rules.computeTiePoints([g]).a,2);
+ assert.throws(()=>rules.computeTiePoints([{...g,scoreA:15,scoreB:14}]),/two-point/);
+});

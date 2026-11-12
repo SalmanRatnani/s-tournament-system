@@ -1,7 +1,6 @@
-/** Pure rules for MBBL Season 1, as written in the user-supplied official rulebook (7 pages).
- * No implicit BWF deuce extension: this rulebook specifies 15-point single games
- * but does not specify an explicit 14-all extension or cap. Operators must confirm
- * this condition before automated rally scoring is activated.
+/** Official MBBL rules plus organiser's 11 Nov 2026 deuce confirmation.
+ * Ordinary games: target 15, win by two, no golden point or sudden-death cap.
+ * The separately specified 30-point relay and walkovers retain their own rules.
  */
 import {MBBL_CATEGORY_ORDER,type MBBLCategory,type MBBLPlayer} from "./catalog";
 export type Side="a"|"b";
@@ -26,6 +25,14 @@ export const REPLACEMENTS:Partial<Record<MBBLCategory,readonly MBBLCategory[]>>=
 };
 export const WALKOVER_SCORE={winner:15,loser:7} as const;
 export const RELAY_THRESHOLDS=[10,20,30] as const;
+export function mbblGameWinner(a:number,b:number):Side|null{
+ if(!Number.isSafeInteger(a)||!Number.isSafeInteger(b)||Math.min(a,b)<0)return null;
+ return Math.max(a,b)>=15&&Math.abs(a-b)>=2?(a>b?"a":"b"):null;
+}
+export function isMBBLFinalScore(a:number,b:number):boolean{
+ if(!mbblGameWinner(a,b))return false;
+ return Math.max(a,b)===15||Math.abs(a-b)===2;
+}
 export function categoryFamily(category:string):keyof typeof REQUIRED_CATEGORY_COUNTS{
  if(category.startsWith("A"))return "A";
  if(category.startsWith("B"))return "B";
@@ -99,7 +106,7 @@ export function computeTiePoints(games:readonly CompletedGame[],penalties:readon
   if(game.walkoverBy){
    if(game.walkoverBy==="a"&&(game.scoreA!==7||game.scoreB!==15))throw Error("Walkover A must be 7–15");
    if(game.walkoverBy==="b"&&(game.scoreA!==15||game.scoreB!==7))throw Error("Walkover B must be 15–7");
-  }
+  }else if(!isMBBLFinalScore(game.scoreA,game.scoreB))throw Error("A completed MBBL game requires 15 or more points and a two-point winning margin");
   rallyA+=game.scoreA;rallyB+=game.scoreB;
   if(game.scoreA>game.scoreB){winsA++;a+=game.trumpA?2:1;if(game.trumpB&&game.walkoverBy!=="b")b--;}
   else{winsB++;b+=game.trumpB?2:1;if(game.trumpA&&game.walkoverBy!=="a")a--;}

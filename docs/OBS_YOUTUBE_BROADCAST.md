@@ -51,3 +51,14 @@
 - YouTube first livestream / encoder setup: https://support.google.com/youtube/answer/2907883
 - OBS official: https://obsproject.com/download
 - VDO.Ninja operator option: https://vdo.ninja/
+
+
+## Audience setup — 11 November 2026
+For the free-budget event, share the saved YouTube watch links with the large
+audience. The website’s /live hub and /watch/1–3 pages remain available. Add the
+signed Browser Source above each camera in OBS so the official score is part of
+the outgoing video. Public watch pages do not repeatedly fetch independent scores.
+Use Main Controller → OBS production to generate the three court links, and
+Viewer links & YouTube to save/copy the three public video URLs. Create these
+actual YouTube events and start the encoders from the venue; no video is started
+by deploying this application. Rehearse all three feeds before the event.

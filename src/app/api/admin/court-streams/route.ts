@@ -1,6 +1,7 @@
 import {NextRequest,NextResponse} from "next/server";
 import {staff,fail} from "@/lib/authorized-admin";
 import {youtubeVideoId} from "@/lib/youtube";
+import {revalidateTag} from "next/cache";
 export async function POST(req:NextRequest){
  try{
   const check=await staff(req,true);if("failure" in check)return check.failure;
@@ -11,6 +12,7 @@ export async function POST(req:NextRequest){
   if(body.url.trim()&&!id)return fail("Enter a valid public YouTube video link or ID");
   const {error}=await check.auth.db.from("courts").update({youtube_video_id:id}).eq("id",body.court);
   if(error)return fail(error.message,503);
+  revalidateTag("public-event");
   return NextResponse.json({ok:true,court:body.court,youtube_video_id:id});
  }catch{return fail("Unable to update court stream",500);}
 }

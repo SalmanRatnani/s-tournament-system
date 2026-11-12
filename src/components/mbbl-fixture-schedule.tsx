@@ -2,7 +2,7 @@
 import {Fragment,useMemo} from "react";
 import Link from "next/link";
 import {ArrowUpRight,CalendarDays,Clock3,MapPin,Trophy} from "lucide-react";
-import {usePublicScoreboard} from "@/lib/use-public-scoreboard";
+import {usePublicEvent} from "@/lib/use-public-scoreboard";
 import {MBBL_EVENT_DATE_LABEL,MBBL_LEAGUE_ROUNDS,MBBL_NON_MATCH_SCHEDULE} from "@/lib/mbbl/fixtures";
 import {MBBL_TEAMS} from "@/lib/mbbl/catalog";
 
@@ -13,7 +13,7 @@ const color=(name:string)=>MBBL_TEAMS.find(t=>t.name===name)?.accent||"#61e6ae";
 const aliases:Record<string,string>={"MB Baddy Group":"MB Baddys","Bad Minions":"Bad Minions"};
 function TeamLabel({name}:{name:string}){return <span className="mbbl-fixture-name"><span className="mbbl-fixture-dot" style={{background:color(name)}}/>{aliases[name]||name}</span>;}
 export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
- const feed=usePublicScoreboard(12000);
+ const feed=usePublicEvent();
  const eventId=teams.find(t=>MBBL_TEAMS.some(v=>v.name===t.name))?.tournament_id;
  const slots=feed.fixtures.filter(s=>s.tournament_id===eventId);
  const loading=feed.loading;

@@ -1,6 +1,6 @@
 "use client";
 import {useEffect,useMemo,useState} from "react";
-import {usePublicScoreboard} from "@/lib/use-public-scoreboard";
+import {usePublicEvent,createOverlayScoreStore,useOverlayScores} from "@/lib/use-public-scoreboard";
 import {gamesWon,type Match} from "@/lib/types";
 import {MBBL_TEAMS} from "@/lib/mbbl/catalog";
 import {MBBL_EVENT_DATE_LABEL} from "@/lib/mbbl/fixtures";
@@ -9,9 +9,12 @@ import {chooseMBBLOverlaySlot,formatSlotTime,slotHeading} from "@/lib/mbbl/overl
 const teamColor=(name:string)=>MBBL_TEAMS.find(t=>t.name.toLowerCase()===name.toLowerCase())?.accent||"#8ae4cc";
 const readable=(name:string)=>name==="MB Baddy Group"?"MB Baddys":name;
 const statusOrder:Record<Match["status"],number>={live:0,paused:1,scheduled:2,completed:3};
-/** The signed route verifies the overlay. This component reads ONLY CDN-public data. */
-export default function OverlayClient({court}:{court:number}){
- const feed=usePublicScoreboard(5000);
+/** Signed, court-scoped fast scores; slow-changing event details remain cached. */
+export default function OverlayClient({court,token}:{court:number;token:string}){
+ const event=usePublicEvent(60000);
+ const scoreStore=useMemo(()=>createOverlayScoreStore(court,token),[court,token]);
+ const scores=useOverlayScores(scoreStore);
+ const feed={...event,...scores.data,loading:event.loading||scores.loading,error:event.error||scores.error};
  const [now,setNow]=useState(()=>new Date());
  useEffect(()=>{
   document.body.classList.add("overlay-body");
@@ -51,7 +54,7 @@ export default function OverlayClient({court}:{court:number}){
    </div>
    <div className="mbbl-obs-footer">
     <span>{fixture?formatSlotTime(fixture.start_local)+" – "+formatSlotTime(fixture.end_local):MBBL_EVENT_DATE_LABEL}</span>
-    <span>{active?.status==="live"?"OFFICIAL DATABASE SCORE":active?"MATCH "+active.status.toUpperCase():"OFFICIAL SCORE PENDING"}</span>
+    <span>{feed.error?"UPDATES INTERRUPTED · LAST RECEIVED SCORE":active?.status==="live"?"OFFICIAL SCORE · WIN BY TWO":active?"MATCH "+active.status.toUpperCase():"OFFICIAL SCORE PENDING"}</span>
    </div>
    <div className="mbbl-obs-accent"/>
   </div>:<div className="overlay-score" role="status">
