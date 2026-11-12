@@ -5,5 +5,5 @@ export function CourtCard({m}:{m:Match}){return <div className="panel court-card
  <div className="court-caption">{m.round}</div><div className="players"><div className="player-row"><span className="player-name">{m.side_a}</span><div className="row"><span className="game-indicator">{gamesWon(m,"a")}</span><strong className={`score-numbers ${m.score_a>m.score_b?"leading":""}`}>{m.score_a}</strong></div></div>
  <div className="player-row"><span className="player-name">{m.side_b}</span><div className="row"><span className="game-indicator">{gamesWon(m,"b")}</span><strong className={`score-numbers ${m.score_b>m.score_a?"leading":""}`}>{m.score_b}</strong></div></div></div>
  <div className="between row"><span className="game-indicator">{gameLabel(m)} • BEST OF {m.best_of}</span><span className="game-indicator">SET {gamesWon(m,"a")} – {gamesWon(m,"b")}</span></div>
- <div className="court-footer"><Link className="btn" style={{flex:1}} href={`/watch/${m.court_id}`}><MonitorPlay size={14}/> Watch <ArrowUpRight size={13}/></Link></div>
+ <div className="court-footer"><Link className="btn" style={{flex:1}} href={`/watch/${m.court_id}`}><MonitorPlay size={14}/> Court scores & links <ArrowUpRight size={13}/></Link></div>
  </div>}

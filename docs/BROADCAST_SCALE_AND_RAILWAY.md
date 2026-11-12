@@ -1,11 +1,11 @@
 # MBBL Scoring + High Viewer Traffic: Infrastructure Runbook
 
-## Production topology (11 November 2026)
+## Production topology (updated 12 November 2026)
 The organiser selected the free-budget approach: OBS embeds the scoreboard in each
 court video; YouTube carries the audience. /live prioritises direct YouTube watch
-links. /watch/1–3 embeds video and loads broadcast details once; it does not poll
-scores, connect Realtime, or authenticate spectators. Broadcast-link refresh and
-score snapshots are explicit user actions. This avoids millions of five-second
+links. /watch/1–3 shows court score snapshots and outbound YouTube links; it does
+not embed video, poll scores, connect Realtime, or authenticate spectators.
+Broadcast-link refresh and score snapshots are explicit user actions. This avoids millions of five-second
 polls during a long broadcast. A 20,000-viewer capacity guarantee has NOT been tested.
 
 /api/public/event holds slow-changing courts, fixtures, teams and player rosters:
@@ -96,3 +96,28 @@ https://docs.railway.com/guides/healthchecks
 https://docs.railway.com/reference/pricing/plans
 https://supabase.com/docs/guides/realtime/subscribing-to-database-changes
 https://vercel.com/docs/edge-network/caching
+
+## Website audience requirement — 12 November 2026
+The organiser also expects spectators to visit the website for automatically
+updating scores, standings and schedules. Moving video to YouTube does not remove
+that traffic. Automatic public score delivery is NOT implemented by the manual
+snapshot mode, and the current MBBL standings page still contains a placeholder.
+
+The next implementation needs a small public state projection with one shared
+read-only connection per browser tab, backed by an independently sized distribution
+service. Publish only after committed official changes, preserve monotonic versions,
+replay the latest snapshot on reconnect, and retain the last confirmed score on
+errors. Standings should use confirmed league games, official Trump/penalty totals,
+games won and rally difference; unfinished rallies must not count as final results.
+Cache schedule/roster data separately and refresh it only when needed.
+
+Cloudflare Durable Objects with hibernating WebSockets is a candidate, not a deployed
+service or proven capacity claim. Its free quotas, connection churn, distribution
+across objects, CPU and storage must be measured with the planned event duration.
+Free quota exhaustion causes errors. Sending updates on changes removes repeated
+empty polls, but 20,000 recipients still require 20,000 deliveries per broadcast.
+Do not enable per-viewer polling as a fallback at this scale without a request budget.
+
+Primary references:
+- https://developers.cloudflare.com/durable-objects/best-practices/websockets/
+- https://developers.cloudflare.com/durable-objects/platform/pricing/
