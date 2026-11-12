@@ -1,16 +1,44 @@
 # MBBL Scoring + High Viewer Traffic: Infrastructure Runbook
 
-## Production topology
-Spectators -> CDN (Vercel, or Railway behind an external CDN) -> /api/public/scoreboard
--> server-only Supabase project (privileged read, scoped JSON projection).
-This endpoint is identical for all spectators. 3-second shared cache, up to 9-second stale
-grace; clients poll on visible tabs only, every 5–12 seconds. No spectator opens Postgres
-Realtime or downloads full live tables on their own.
+## Production topology (11 November 2026)
+The organiser selected the free-budget approach: OBS embeds the scoreboard in each
+court video; YouTube carries the audience. /live prioritises direct YouTube watch
+links. /watch/1–3 embeds video and loads broadcast details once; it does not poll
+scores, connect Realtime, or authenticate spectators. Broadcast-link refresh and
+score snapshots are explicit user actions. This avoids millions of five-second
+polls during a long broadcast. A 20,000-viewer capacity guarantee has NOT been tested.
 
-Referee -> authenticated API -> Supabase service role -> private atomic Postgres RPC ->
-mbbl_score_events audit. Referees do not share their score writing keys with viewers.
-OBS signed links remain server-verified, never public. YouTube hosts all 3 videos, not Railway.
-Other public uses (fixtures, team rosters) should use the same shared snapshot.
+/api/public/event holds slow-changing courts, fixtures, teams and player rosters:
+60-second server and CDN caching. /api/public/scoreboard holds compact scores only,
+with a 3-second shared cache. Browser consumers share requests and cached state.
+The SQL score projection reads ties and games in one consistent database snapshot,
+excluding pending games, hidden Trump choices, staff identities and audit logs.
+
+Signed OBS pages call /api/overlay/{court}/scoreboard with the same court-bound,
+24-hour token in the Authorization header. That endpoint verifies the token on
+every call, reads only the selected court, and uses private/no-store headers.
+Only these few clients poll at about one second; errors use exponential backoff
+(up to 60 seconds), timeout/abort, visibility/offline handling and last-good data.
+Stale network/cache responses cannot overwrite a newer score snapshot. OBS must
+keep the browser source active; rotate its signed URL before its 24-hour expiry.
+
+Referees use authenticated APIs and assignment checks. A point appears from the
+server acknowledgement, without a second full-table fetch. Lost responses retry
+the SAME request ID and version; ambiguous commands block new taps until resolved.
+Live reconciliation runs every two seconds and slows outside active games.
+
+## Confirmed scoring
+Ordinary MBBL games: target 15, win by two after 14–14, no golden point and no
+sudden-death cap. 15–14 is not a win; 16–14 is. 30–29 is not a win; 31–29 is.
+A winning rally blocks further points but allows Undo until owner finalisation.
+Finalisation applies each team's Trump points once and pauses before the next game.
+The distinct rulebook relay remains first to 30; walkovers remain 15–7.
+
+Apply existing migrations 009, 010 and 011 before
+20261111160805_mbbl_deuce_and_compact_scores.sql. They do not create lineups or start
+matches. The owner still prepares each tie and assigns officials. The SQL rehearsal
+in tests/sql/mbbl-deuce.sql validates the entire league-game path then rolls back
+all test data. It requires an unused scheduled fixture on a free court.
 
 ## Load distribution / Railway
 A Railway deployment may run several application replicas behind Railway's public
@@ -39,7 +67,7 @@ signed /overlay links. A default Railway app domain is not a substitute for an
 edge caching layer when there are many spectators.
 
 ## Operational gates before 22 Nov 2026
-1. Organizer confirms ambiguous 14–14 game-ending rule and any score cap.
+1. Deuce confirmed on 11 November 2026; ensure the deuce migration is installed.
 2. Owner validates nine pairs, preselects independent Trump games and establishes
    a signed/controlled tie roster. No automated play before rule confirmation.
 3. Owner authorizes 3 referee accounts and their **specific** MBBL ties; no sharing
@@ -52,8 +80,7 @@ edge caching layer when there are many spectators.
 6. Test 3 independent OBS/YouTube encoders with venue network uplink, phone feeds,
    signed overlay expiry and stream failover. Use a published fallback slate.
 7. Configure cost budgets, alerts, error tracking, incident playbook and rollbacks.
-8. Remove stale dependency lockfile mismatch; use npm ci and pin dependencies after
-   regenerating the lockfile. Configure alerts for failed deployments.
+8. The dependency lockfile is reconciled; CI uses npm ci. Check failed deployments.
 
 ## Limits / caveats
 Do not represent a planned fixture as live before an organizer starts it.

@@ -23,8 +23,13 @@ export async function POST(req:NextRequest){
    p_tie_id:tieId,p_game:game,p_side:side,p_action:action,p_request_id:requestId,p_actor:user.id,p_expected_version:expectedVersion
   });
   if(error){
-   const conflict=/stale|not live|nothing to undo|blocked|pending|rule|completed|replayed/i.test(error.message);
-   return NextResponse.json({error:error.message},{status:conflict?409:400,headers:{"Cache-Control":"no-store"}});
+   // Only an explicit database rejection proves the command did not commit.
+   // A lost database response must remain retryable with the SAME request ID.
+   if(error.code!=="P0001")return NextResponse.json(
+    {error:"Score confirmation temporarily unavailable. Retry the same command."},
+    {status:503,headers:{"Cache-Control":"no-store","Retry-After":"1"}}
+   );
+   return NextResponse.json({error:error.message},{status:409,headers:{"Cache-Control":"no-store"}});
   }
   return NextResponse.json({result:data},{headers:{"Cache-Control":"no-store"}});
  }catch{return NextResponse.json({error:"Unable to record score"},{status:500});}

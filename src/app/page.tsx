@@ -13,7 +13,7 @@ const courtIds=[1,2,3] as const;
 const priority=(m:Match)=>m.status==="live"?0:m.status==="paused"?1:m.status==="scheduled"?2:3;
 
 export default function Home(){
- const {matches,loading,error}=useMatches();
+ const {matches,loading,error,refresh}=useMatches();
  const {courts}=useCourtStreams();
  const rubbers=matches.filter(m=>m.kind!=="team_tie");
  const active=rubbers.filter(m=>m.status==="live"||m.status==="paused");
@@ -51,7 +51,8 @@ export default function Home(){
     </div>
    </section>
    <section className="launch-section" aria-labelledby="home-courts">
-    <div className="launch-section-head"><div><div className="eyebrow">RIGHT NOW</div><h2 id="home-courts" className="launch-section-title">The courts are yours.</h2><p className="subline">Choose a court to watch. Scores appear as officials record them.</p></div><Link href="/live" className="btn">All three courts <ArrowRight size={15}/></Link></div>
+    <div className="launch-section-head"><div><div className="eyebrow">RIGHT NOW</div><h2 id="home-courts" className="launch-section-title">The courts are yours.</h2><p className="subline">Choose a court to watch. The video includes the official scoreboard. Refresh this page’s score snapshot when needed.</p></div><Link href="/live" className="btn">All three courts <ArrowRight size={15}/></Link></div>
+    <button className="btn" onClick={()=>void refresh()} disabled={loading}>Refresh score snapshot</button>
     {error&&<div className="error" role="alert">{error}</div>}
     {loading?<div className="launch-skeleton" role="status">Connecting to tournament scores…</div>:spotlight.length?
      <div className="grid cols-3">{spotlight.slice(0,3).map(m=><CourtCard key={m.id} m={m}/>)}</div>:

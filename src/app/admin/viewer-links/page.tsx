@@ -32,12 +32,13 @@ export default function ViewerLinks(){
  {()=> <div className="viewer-manager">
   <div className="panel panel-pad" style={{marginBottom:18}}>
    <div className="row"><Radio color="var(--mint)"/><h2 className="section-title">Main spectator link</h2></div>
-   <p className="subline" style={{marginTop:12}}>Share this link with everyone. They can choose between three courts, follow the live scores and watch YouTube.</p>
+   <p className="subline" style={{marginTop:12}}>Share this link with everyone. They can choose between three courts, watch YouTube with the scoreboard inside the video.</p>
    <div className="row wrap"><code className="viewer-link-value">{url("/live")}</code><button className="btn btn-primary" onClick={()=>void copy(url("/live"))}><Copy size={15}/>{copied===url("/live")?"Copied":"Copy spectator link"}</button><a className="btn" href="/live" target="_blank" rel="noopener noreferrer"><ExternalLink size={15}/> Preview</a></div>
   </div>
   <div className="grid cols-3">{[1,2,3].map(court=>{
    const current=streams.courts.find(c=>c.id===court)?.youtube_video_id||"";
    const value=inputs[court]??current;
+   const videoId=youtubeVideoId(value);
    return <div className="panel panel-pad" key={court}>
     <div className="row between"><h2 className="section-title">Court {String(court).padStart(2,"0")}</h2><Youtube color="#e44"/></div>
     <p className="help-note" style={{marginTop:14}}>Permanent viewer link</p>
@@ -45,6 +46,7 @@ export default function ViewerLinks(){
     <button className="btn" style={{marginTop:12}} onClick={()=>void copy(url("/watch/"+court))}><Copy size={15}/> Copy court link</button>
     <label className="field" style={{marginTop:24}}>Public YouTube livestream link<input className="input" value={value} onChange={e=>setInputs(o=>({...o,[court]:e.target.value}))} placeholder="https://www.youtube.com/live/..." spellCheck={false}/></label>
     <button className="btn btn-primary" style={{marginTop:12}} disabled={busy!==null||streams.loading} onClick={()=>void save(court)}><Link2 size={15}/>{busy===court?"Saving...":"Save YouTube stream"}</button>
+    {videoId&&<button className="btn" style={{marginTop:12}} onClick={()=>void copy(youtubeWatchUrl(videoId))}><Copy size={15}/> Copy YouTube viewer link</button>}
     {current&&<a className="btn" style={{marginTop:12}} href={youtubeWatchUrl(current)} target="_blank" rel="noopener noreferrer"><Youtube size={15}/> Open on YouTube <ExternalLink size={13}/></a>}
     <p className="help-note" style={{marginTop:16}}>Never paste private YouTube stream keys or OBS RTMP credentials.</p>
    </div>;

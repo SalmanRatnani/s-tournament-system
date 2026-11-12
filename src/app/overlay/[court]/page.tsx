@@ -7,5 +7,5 @@ export default async function OverlayPage({params,searchParams}:{params:Promise<
  const [{court:raw},{token}]=await Promise.all([params,searchParams]);
  const court=Number(raw);
  if(!Number.isInteger(court)||typeof token!=="string"||!verifyOverlayToken(court,token))notFound();
- return <OverlayClient court={court}/>;
+ return <OverlayClient court={court} token={token}/>;
 }

@@ -31,8 +31,8 @@ Before activating official match play, replace this temporary name-based compati
 10. Day-of no-show A/B replacement table: A+→A3/B1; A1→B1/B2; A2→B2/B3; A3→B3/B4; B1→B5/C1; B2→C1/C2; B3→C2/C3; B4→C3/C4; B5→C4/G1.
 11. K/W/G no-shows cause 15–7 walkover to opposing team. For the forfeiting team, do not assess the normal -1 Trump loss deduction.
 
-### Required clarification before activating scoring
-The PDF says one game to 15, no side change, but does not explicitly state whether a 14–14 game finishes at 15 or uses deuce/extension. **Do not assume either variant or auto-award wins at 15 until the organiser confirms**; this is deliberately recorded as `confirmation_pending` in tournament format metadata.
+### Organiser clarification — 11 November 2026
+The organiser confirmed two-point deuce after 14–14, with no golden point. Ordinary games require a 15-point target and a two-point lead, without a sudden-death cap. The deuce migration records this in tournament metadata and removes the previous scoring block. The 30-point relay is a separate rule. Prepare a real tie and assign its official before the owner starts play.
 
 ## Interfaces
 - /mbbl — public category roster and format information.
@@ -44,7 +44,7 @@ The PDF says one game to 15, no side change, but does not explicitly state wheth
 
 ## Launch gates
 - Confirm source spellings, poster logos and organizer rights before public promotion.
-- Confirm 14-all scoring rule and tie-game pause/resume/undo policy.
+- Deuce is confirmed. Rehearse tie-game pause/resume/undo on the actual referee phones.
 - Build transactional MBBL tie/rubber/Trump/penalty/relay state, event logs, authenticated controller/referee APIs, realtime subscriptions and court overlays.
 - Validate 9 pair approvals, per-team independent Trump secrecy until confirmed, lineup changes, A/B replacements, no-show walkovers, and stage-specific finalization.
 - Add full official standings and relay referee scoring; use a distinct ranking algorithm for this event.

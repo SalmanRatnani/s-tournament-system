@@ -11,7 +11,7 @@ const demoTies:TeamTie[]=roundRobin(demoTeams.map(t=>t.id)).map((v,i)=>({
  side_a:demoTeams.find(t=>t.id===v.a)!.name,side_b:demoTeams.find(t=>t.id===v.b)!.name
 }));
 export function useTournamentPublic(){
- const feed=usePublicScoreboard(12000);
+ const feed=usePublicScoreboard();
  if(demoEnabled)return {teams:demoTeams,players:[] as RosterPlayer[],ties:demoTies,loading:false,error:"",demo:true};
  return {
   teams:feed.teams as TournamentTeam[],
