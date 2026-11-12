@@ -32,7 +32,7 @@ export default function ViewerLinks(){
  {()=> <div className="viewer-manager">
   <div className="panel panel-pad" style={{marginBottom:18}}>
    <div className="row"><Radio color="var(--mint)"/><h2 className="section-title">Main spectator link</h2></div>
-   <p className="subline" style={{marginTop:12}}>Share this link with everyone. They can choose between three courts, watch YouTube with the scoreboard inside the video.</p>
+   <p className="subline" style={{marginTop:12}}>Share this link for court scores and tournament information. Each court has a link to watch on YouTube, with the OBS scoreboard inside the video.</p>
    <div className="row wrap"><code className="viewer-link-value">{url("/live")}</code><button className="btn btn-primary" onClick={()=>void copy(url("/live"))}><Copy size={15}/>{copied===url("/live")?"Copied":"Copy spectator link"}</button><a className="btn" href="/live" target="_blank" rel="noopener noreferrer"><ExternalLink size={15}/> Preview</a></div>
   </div>
   <div className="grid cols-3">{[1,2,3].map(court=>{

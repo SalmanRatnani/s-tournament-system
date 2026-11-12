@@ -1,7 +1,7 @@
 # OBS + YouTube — Three-court broadcast runbook
 
 ## Status: operator-assisted setup, not automatic YouTube control
-- S Tournament System displays public YouTube videos and provides signed *read-only* browser-source URLs for live court scores.
+- S Tournament System links to public YouTube broadcasts and provides signed *read-only* browser-source URLs for live court scores.
 - It does **not** transmit video, control OBS, create YouTube livestreams, start/stop them, or store YouTube ingest keys.
 - Staff must configure camera feeds, OBS encoders and YouTube Live Control Room on their own devices.
 - Site: /admin/production (Owner only) and /admin/viewer-links (Owner only). Spectators: /live and /watch/1, /watch/2, /watch/3.
@@ -14,7 +14,7 @@
 4. In S Tournament's /admin/production, generate the signed **Court 1 score overlay URL**. Add it as a separate OBS **Browser Source**, set width 1920 and height 1080 and layer it above the camera. The link grants read-only access and expires in 24 hours. Test the standby slate before fixtures.
 5. In OBS **Settings > Stream**, choose YouTube RTMPS (or YouTube account integration), and connect using the **secret** from YouTube Studio. Enable NVENC H.264 if available. Suggested first test: CBR, **720p30**, **8,000 Kbps video**, **128 Kbps AAC**, **2-second keyframes**; YouTube lists 8 Mbps as its recommended H.264 ingest bitrate for 720p30. Lower rates require a real picture-quality test and should be verified against YouTube's current encoder guidance.
 6. Start Streaming in OBS, check YouTube Control Room ingest status, then start/confirm the unlisted live event. Observe the encoder's dropped frames and buffering during fast movement. Confirm audible microphone/court ambient audio, with no feedback loop.
-7. Copy the event's **public YouTube watch URL** into S Tournament's /admin/viewer-links for **Court 1**. Do not paste the RTMP key. Visit /watch/1 using another browser/device: validate playback, scoreboard and no login requirement. The event must permit embedding.
+7. Copy the event's **public YouTube watch URL** into S Tournament's /admin/viewer-links for **Court 1**. Do not paste the RTMP key. Visit /watch/1 using another browser/device: check the score snapshot and YouTube link without a login, then open YouTube to validate playback and the OBS scoreboard.
 8. Stop OBS and end the YouTube event manually after testing. Verify the player and overlay return to expected standby states. Remove/test links when the event ends.
 
 ## Phase 2: Expand to all three courts
@@ -55,7 +55,7 @@
 
 ## Audience setup — 11 November 2026
 For the free-budget event, share the saved YouTube watch links with the large
-audience. The website’s /live hub and /watch/1–3 pages remain available. Add the
+audience. The website’s /live hub and /watch/1–3 pages show scores and outbound YouTube links. Videos play on YouTube; there are no embedded video players. Add the
 signed Browser Source above each camera in OBS so the official score is part of
 the outgoing video. Public watch pages do not repeatedly fetch independent scores.
 Use Main Controller → OBS production to generate the three court links, and

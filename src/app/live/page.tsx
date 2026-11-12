@@ -17,7 +17,7 @@ export default function LiveViewerHub(){
     <div className="viewer-court-banner"><div className="row between"><span className="eyebrow" style={{margin:0}}>COURT {String(court).padStart(2,"0")}</span><span className="badge">{videoId?"STREAM LINKED":"AWAITING STREAM"}</span></div><MonitorPlay size={48} color="var(--mint)"/></div>
     <div className="panel-pad"><h2 className="section-title">Court {court} broadcast</h2><p className="help-note" style={{marginTop:9}}>Follow every rally and the umpire's score in the broadcast.</p>
      {videoId&&<a className="btn btn-primary" style={{width:"100%",marginTop:14}} href={youtubeWatchUrl(videoId)} target="_blank" rel="noopener noreferrer"><Youtube size={16}/> Watch on YouTube <ArrowUpRight size={14}/></a>}
-     <Link href={"/watch/"+court} className="btn" style={{width:"100%",marginTop:9}}><Radio size={16}/> {videoId?"Watch here":"Open court page"} <ArrowUpRight size={14}/></Link>
+     <Link href={"/watch/"+court} className="btn" style={{width:"100%",marginTop:9}}><Radio size={16}/> Court scores & links <ArrowUpRight size={14}/></Link>
     </div>
    </article>;
   })}</div>

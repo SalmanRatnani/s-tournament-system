@@ -26,7 +26,7 @@ export default function Home(){
     <div className="launch-hero-content">
      <div className="launch-kicker"><span className="signal-dot"/><span>BADMINTON · LIVE TOURNAMENT EXPERIENCE</span></div>
      <h1 className="launch-title display">Every rally.<br/>Every moment.<br/><em>One destination.</em></h1>
-     <p className="launch-description">Three courts. Six teams. One unforgettable championship. Follow the action, watch court broadcasts and track every point in one place.</p>
+     <p className="launch-description">Three courts. Six teams. One unforgettable championship. Check scores and fixtures here, and watch each court broadcast on YouTube.</p>
      <div className="row wrap launch-actions">
       <Link className="btn btn-primary launch-cta" href="/live"><Radio size={18}/> Enter the live arena <ArrowRight size={17}/></Link>
       <Link className="btn launch-cta-secondary" href="/schedule">Explore the schedule <ArrowUpRight size={16}/></Link>
@@ -60,7 +60,7 @@ export default function Home(){
       <div className="row between"><span className="eyebrow">COURT {String(court).padStart(2,"0")}</span><ArrowUpRight size={18}/></div>
       <span className="launch-court-number">{String(court).padStart(2,"0")}</span>
       <span className="launch-empty-title">{courts.find(c=>c.id===court)?.youtube_video_id?"Broadcast link ready":"Awaiting first serve"}</span>
-      <span className="launch-empty-description">Open court viewing <ChevronRight size={14}/></span>
+      <span className="launch-empty-description">Court scores & links <ChevronRight size={14}/></span>
      </Link>)}</div>}
    </section>
    <section className="launch-section" aria-labelledby="home-explore">
