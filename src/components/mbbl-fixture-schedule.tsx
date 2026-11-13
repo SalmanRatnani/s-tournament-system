@@ -2,7 +2,8 @@
 import {Fragment,useMemo} from "react";
 import Link from "next/link";
 import {ArrowUpRight,CalendarDays,Clock3,MapPin,Trophy} from "lucide-react";
-import {usePublicEvent} from "@/lib/use-public-scoreboard";
+import {usePublicScoreboard} from "@/lib/use-public-scoreboard";
+import {ScoreFeedStatus} from "@/components/score-feed-status";
 import {MBBL_EVENT_DATE_LABEL,MBBL_LEAGUE_ROUNDS,MBBL_NON_MATCH_SCHEDULE} from "@/lib/mbbl/fixtures";
 import {MBBL_TEAMS} from "@/lib/mbbl/catalog";
 
@@ -13,7 +14,7 @@ const color=(name:string)=>MBBL_TEAMS.find(t=>t.name===name)?.accent||"#61e6ae";
 const aliases:Record<string,string>={"MB Baddy Group":"MB Baddys","Bad Minions":"Bad Minions"};
 function TeamLabel({name}:{name:string}){return <span className="mbbl-fixture-name"><span className="mbbl-fixture-dot" style={{background:color(name)}}/>{aliases[name]||name}</span>;}
 export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
- const feed=usePublicEvent();
+ const feed=usePublicScoreboard();
  const eventId=teams.find(t=>MBBL_TEAMS.some(v=>v.name===t.name))?.tournament_id;
  const slots=feed.fixtures.filter(s=>s.tournament_id===eventId);
  const loading=feed.loading;
@@ -25,7 +26,9 @@ export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
  const findByRound=(round:number,court:number)=>league.find(s=>s.round_no===round&&s.court_id===court);
  const formatMatch=(s:FixtureRow|null|undefined)=>{
   if(!s)return <span className="help-note">Awaiting published fixture</span>;
-  return <div className="mbbl-matchup"><TeamLabel name={byId.get(s.team_a_id||"")||"TBC"}/><span className="mbbl-fixture-versus">VS</span><TeamLabel name={byId.get(s.team_b_id||"")||"TBC"}/>{s.status!=="scheduled"&&<small className="mbbl-fixture-alert">{s.status.toUpperCase()}</small>}</div>;
+  const tie=feed.mbblTies.find(t=>t.fixture_slot_id===s.id);
+  const status=s.status==="cancelled"?"cancelled":tie?.status||s.status;
+  return <div className="mbbl-matchup"><TeamLabel name={byId.get(s.team_a_id||"")||"TBC"}/><span className="mbbl-fixture-versus">VS</span><TeamLabel name={byId.get(s.team_b_id||"")||"TBC"}/><small className="mbbl-fixture-alert">{status.toUpperCase().replaceAll("_"," ")}{tie&&s.status!=="cancelled"?` · Overall ${tie.overall_a}–${tie.overall_b}`:""}</small>{tie&&tie.status!=="completed"&&s.status!=="cancelled"&&<small>Game {tie.active_game} · {tie.score_a}–{tie.score_b}</small>}</div>;
  };
  return <div className="mbbl-schedule">
   <div className="mbbl-fixture-intro">
@@ -33,6 +36,7 @@ export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
    <div className="mbbl-fixture-stats"><span><CalendarDays size={15}/> {MBBL_EVENT_DATE_LABEL}</span><span><Clock3 size={15}/> All times IST</span><span><MapPin size={15}/> Three courts</span></div>
   </div>
   {error&&<div className="error" role="alert">Unable to load published fixtures: {error}</div>}
+  <ScoreFeedStatus delivery={feed.delivery} receivedAt={feed.receivedAt}/>
   {loading?<div className="panel empty" role="status">Loading official MBBL fixtures…</div>:league.length!==15?<div className="panel empty">The MBBL fixture timetable is being prepared for publication. {league.length} of 15 league ties are currently published.</div>:<>
    <div className="mbbl-timetable-wrap">
     <table className="mbbl-timetable">
@@ -61,7 +65,7 @@ export default function MBBLFixtureSchedule({teams}:{teams:TeamRow[]}){
     <span>Semifinals and final participants depend on completed league standings.</span>
    </div>
   </>}
-  <div className="mbbl-fixture-note">These are scheduled team ties, not completed results or active referee games. Each tie requires nine compulsory doubles games under the MBBL Season 1 rules. Match start times may change under organiser control. Event date confirmed by the organiser: {MBBL_EVENT_DATE_LABEL}.</div>
+  <div className="mbbl-fixture-note">Live and completed statuses follow the official match desk. A scheduled time alone does not mean play has started. Each tie requires nine compulsory doubles games. Published timetable changes refresh about every five minutes. Event date: {MBBL_EVENT_DATE_LABEL}.</div>
   <div className="row wrap" style={{marginTop:20}}><Link href="/mbbl" className="btn">Meet the six teams <ArrowUpRight size={15}/></Link><Link href="/mbbl/rules" className="btn">Match format & rules <ArrowUpRight size={15}/></Link></div>
  </div>;
 }

@@ -19,7 +19,7 @@ function browser(fetch){
   setTimeout:(fn,delay)=>{timers.set(++id,{at:time+delay,fn});return id;},clearTimeout:key=>timers.delete(key)});
  return {createSnapshotStore,document,navigator,events,timers,async advance(ms){time+=ms;for(const [key,t] of [...timers])if(t.at<=time){timers.delete(key);t.fn();}await flush();}};
 }
-test('public broadcast viewers load once, share requests, and generate no ongoing polls',async()=>{
+test('a manual snapshot resource loads once and shares requests without ongoing polls',async()=>{
  let requests=0,resolve;
  const b=browser(()=>{requests++;return new Promise(r=>resolve=r);});
  const store=b.createSnapshotStore({url:'/api/public/event',initial:{courts:[]}});
@@ -78,6 +78,7 @@ test('known stale-score rejection is not retried; total network failure stays un
 test('API preserves uncertainty when the database response is lost, but reports a definite rule rejection',async()=>{
  let databaseError={code:'',message:'Fetch failed'};
  const {POST}=load('src/app/api/mbbl/score/route.ts',{require:name=>{
+  if(name==='@/lib/score-publisher')return {scheduleScorePublish:()=>{}};
   if(name==='next/server')return {NextResponse:{json:(body,init)=>({body,...init})}};
   if(name==='@/lib/auth')return {authorize:async()=>({role:'owner',user:{id:'owner'},db:{rpc:async()=>({data:null,error:databaseError})}})};
   throw Error('Unexpected import '+name);

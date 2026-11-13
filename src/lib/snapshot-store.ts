@@ -9,13 +9,13 @@ export function createSnapshotStore<T>({url,initial,headers,timeoutMs=8000,accep
  let timer:ReturnType<typeof setTimeout>|undefined;
  let flight:Promise<void>|undefined;
  let controller:AbortController|undefined;
- let failures=0,attempted=false;
+ let failures=0,attempted=false,pollingEnabled=true;
  const emit=()=>listeners.forEach((_,listener)=>listener());
  const available=()=>typeof document!=="undefined"&&document.visibilityState!=="hidden"&&navigator.onLine!==false;
  const clear=()=>{if(timer)clearTimeout(timer);timer=undefined;};
  const schedule=()=>{
   clear();
-  if(!listeners.size||!available())return;
+  if(!listeners.size||!available()||!pollingEnabled)return;
   const intervals=[...listeners.values()].filter(n=>n>0);
   // A public, load-once view does not keep retrying throughout a broadcast.
   if(!intervals.length)return;
@@ -52,6 +52,12 @@ export function createSnapshotStore<T>({url,initial,headers,timeoutMs=8000,accep
  return {
   getSnapshot:()=>state,
   getServerSnapshot:()=>initialState,
+  ingest(next:T){
+   if(!accept||accept(next,state.data))state={data:next,loading:false,error:"",receivedAt:Date.now()};
+   else state={...state,loading:false,error:""};
+   failures=0;emit();
+  },
+  setPollingEnabled(enabled:boolean){pollingEnabled=enabled;schedule();},
   refresh,
   subscribe(listener:()=>void,interval=0){
    listeners.set(listener,interval);

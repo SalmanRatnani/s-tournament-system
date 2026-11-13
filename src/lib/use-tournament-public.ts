@@ -1,5 +1,4 @@
 "use client";
-import {useEffect,useState} from "react";
 import {usePublicScoreboard} from "./use-public-scoreboard";
 import {demoEnabled} from "./demo";
 import {roundRobin,DEFAULT_TEAM_NAMES,type TournamentTeam,type TeamTie} from "./tournament";
@@ -12,8 +11,9 @@ const demoTies:TeamTie[]=roundRobin(demoTeams.map(t=>t.id)).map((v,i)=>({
 }));
 export function useTournamentPublic(){
  const feed=usePublicScoreboard();
- if(demoEnabled)return {teams:demoTeams,players:[] as RosterPlayer[],ties:demoTies,loading:false,error:"",demo:true};
+ if(demoEnabled)return {...feed,teams:demoTeams,players:[] as RosterPlayer[],ties:demoTies,loading:false,error:"",demo:true};
  return {
+  ...feed,
   teams:feed.teams as TournamentTeam[],
   players:feed.players as RosterPlayer[],
   ties:feed.matches.filter(m=>m.kind==="team_tie") as unknown as TeamTie[],
