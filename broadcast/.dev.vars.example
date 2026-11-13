@@ -1,0 +1,4 @@
+# Local development only. Production: wrangler secret put PUBLISH_SECRET.
+# Use the same independent random secret as SCORE_RELAY_PUBLISH_SECRET in Vercel.
+PUBLISH_SECRET=
+

@@ -5,6 +5,7 @@ import {Shell} from "@/components/shell";
 import {usePublicScoreboard} from "@/lib/use-public-scoreboard";
 import {youtubeVideoId,youtubeWatchUrl} from "@/lib/youtube";
 import {PublicCourtScore} from "@/components/public-court-score";
+import {ScoreFeedStatus} from "@/components/score-feed-status";
 
 export default function LiveViewerHub(){
  const feed=usePublicScoreboard();
@@ -21,7 +22,7 @@ export default function LiveViewerHub(){
     </div>
    </article>;
   })}</div>
-  <div className="section-head"><div><h2 className="section-title">Score snapshot</h2><p className="help-note">{feed.loading?"Loading scores…":"Refresh for the latest court scores. The video scoreboard updates during play."}</p></div><button className="btn" disabled={feed.loading} onClick={()=>void feed.refresh()}><RefreshCcw size={15}/> Refresh scores</button></div>
+  <div className="section-head"><div><h2 className="section-title">Court scores</h2><ScoreFeedStatus delivery={feed.delivery} receivedAt={feed.receivedAt}/></div><button className="btn" disabled={feed.loading} onClick={()=>void feed.refresh()}><RefreshCcw size={15}/> Refresh now</button></div>
   <div className="grid cols-3">{[1,2,3].map(court=><PublicCourtScore key={court} court={court} feed={feed}/>)}</div>
  </div></Shell>;
 }

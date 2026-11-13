@@ -1,5 +1,7 @@
 # MBBL Scoring + High Viewer Traffic: Infrastructure Runbook
 
+> Superseded audience plan: the organiser confirmed at most 500 concurrent website viewers on 12 November 2026. The implemented push relay, automatic fallback, MBBL standings and activation instructions are in [LIVE_VIEWERS_500.md](LIVE_VIEWERS_500.md). The manual-refresh/20,000-viewer sections below are historical; Railway is not required for the selected design.
+
 ## Production topology (updated 12 November 2026)
 The organiser selected the free-budget approach: OBS embeds the scoreboard in each
 court video; YouTube carries the audience. /live prioritises direct YouTube watch

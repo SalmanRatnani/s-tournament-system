@@ -1,5 +1,7 @@
 import {unstable_cache} from "next/cache";
 import {supabaseServer} from "./supabase";
+import {calculateMBBLStandings} from "./mbbl/standings";
+import type {PublicMBBLTie} from "./use-public-scoreboard";
 
 /** Slow-changing data is cached separately from rally scores, never per spectator. */
 export const readPublicEvent=unstable_cache(async()=>{
@@ -18,6 +20,8 @@ export const readPublicEvent=unstable_cache(async()=>{
 export async function readPublicScores(court:number|null=null){
  const {data,error}=await supabaseServer().rpc("mbbl_public_score_snapshot",{p_court:court});
  if(error||!data)throw Error("Score source unavailable");
- return data;
+ if(court!==null)return data;
+ const event=await readPublicEvent();
+ return {...data,standings:calculateMBBLStandings(event.teams,event.fixtures,data.mbblTies as PublicMBBLTie[])};
 }
-export const readCachedPublicScores=unstable_cache(()=>readPublicScores(),["public-scores-v2"],{revalidate:3});
+export const readCachedPublicScores=unstable_cache(()=>readPublicScores(),["public-scores-v3"],{revalidate:3,tags:["public-scores"]});

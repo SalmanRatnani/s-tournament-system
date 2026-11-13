@@ -1,3 +1,4 @@
+import {scheduleScorePublish} from "@/lib/score-publisher";
 import {NextRequest,NextResponse} from "next/server";
 import {staff,fail,isUuid} from "@/lib/authorized-admin";
 import {allowedPair,validateNinePairs,validateTrumpSelections,type PairSelection} from "@/lib/mbbl/rules";
@@ -27,6 +28,7 @@ export async function POST(req:NextRequest){
    p_fixture_id:fixtureId,p_pairs:pairs,p_trumps_a:trumpA,p_trumps_b:trumpB,p_actor:guard.auth.user.id
   });
   if(error)return fail(error.message,409);
+  scheduleScorePublish();
   return NextResponse.json({tieId:data,status:"ready",message:"Lineups and Trump picks recorded. Assign a referee and start the game. Win by two after 14–14; no golden point."},{headers:{"Cache-Control":"no-store"}});
  }catch{return fail("Unable to prepare the MBBL tie",500);}
 }

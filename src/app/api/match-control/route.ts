@@ -1,3 +1,4 @@
+import {scheduleScorePublish} from "@/lib/score-publisher";
 import {NextRequest,NextResponse} from "next/server";
 import {authorize} from "@/lib/auth";
 export async function POST(req:NextRequest){
@@ -9,6 +10,7 @@ export async function POST(req:NextRequest){
   if(!target||target.kind==="team_tie")return NextResponse.json({error:"Start individual rubbers, not team ties"},{status:409});
   const {data,error}=await auth.db.rpc("set_match_status",{p_match_id:matchId,p_status:status,p_actor:auth.user.id});
   if(error)return NextResponse.json({error:error.message},{status:409});
+  scheduleScorePublish();
   return NextResponse.json({match:data});
  }catch{return NextResponse.json({error:"Request could not be processed"},{status:500});}
 }

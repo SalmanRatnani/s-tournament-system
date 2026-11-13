@@ -1,3 +1,4 @@
+import {scheduleScorePublish} from "@/lib/score-publisher";
 import {NextRequest,NextResponse} from "next/server";
 import {authorize} from "@/lib/auth";
 export const runtime="nodejs";
@@ -31,6 +32,7 @@ export async function POST(req:NextRequest){
    );
    return NextResponse.json({error:error.message},{status:409,headers:{"Cache-Control":"no-store"}});
   }
+  scheduleScorePublish();
   return NextResponse.json({result:data},{headers:{"Cache-Control":"no-store"}});
  }catch{return NextResponse.json({error:"Unable to record score"},{status:500});}
 }

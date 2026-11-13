@@ -1,0 +1,18 @@
+{
+  "name": "s-tournament-score-relay",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8787 --ip 127.0.0.1",
+    "check": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy",
+    "test:load": "node scripts/load-test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.161.0",
+    "ws": "8.18.3",
+    "miniflare": "5.20261110.2-beta",
+    "esbuild": "0.28.2"
+  }
+}

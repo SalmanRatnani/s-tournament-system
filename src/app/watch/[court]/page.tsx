@@ -5,6 +5,7 @@ import {ChevronLeft,ExternalLink,Youtube,Radio,RefreshCcw,CalendarDays,Trophy} f
 import {Shell,PageHeading} from "@/components/shell";
 import {usePublicScoreboard} from "@/lib/use-public-scoreboard";
 import {PublicCourtScore} from "@/components/public-court-score";
+import {ScoreFeedStatus} from "@/components/score-feed-status";
 import {youtubeVideoId,youtubeWatchUrl} from "@/lib/youtube";
 
 export default function WatchCourt(){
@@ -18,9 +19,9 @@ export default function WatchCourt(){
   {!valid?<div className="panel panel-pad">Choose Court 1, 2 or 3 from the <Link href="/live">live viewer hub</Link>.</div>:<>
    {error&&<p className="error" role="alert">{error}</p>}
    <section aria-label="Court score snapshot" style={{marginBottom:20}}>
-    <div className="section-head"><h2 className="section-title">Score snapshot</h2><button className="btn" onClick={()=>void refresh()} disabled={loading}><RefreshCcw size={15}/> Refresh score & links</button></div>
+    <div className="section-head"><h2 className="section-title">Court score</h2><button className="btn" onClick={()=>void refresh()} disabled={loading}><RefreshCcw size={15}/> Refresh now</button></div>
     {loading?<p role="status" className="help-note">Loading the court score…</p>:<PublicCourtScore court={court} feed={feed}/>}
-    <p className="help-note" style={{marginTop:12}}>Use Refresh for the latest recorded score.</p>
+    <ScoreFeedStatus delivery={feed.delivery} receivedAt={feed.receivedAt}/>
    </section>
    <section className="panel panel-pad" aria-label="YouTube court broadcast"><div className="row"><Youtube size={28} color="var(--mint)"/><h2 className="section-title">Watch Court {court} on YouTube</h2></div><p className="subline" style={{marginTop:12}}>{videoId?"Open the broadcast on YouTube. The official scoreboard is included in the video.":loading?"Checking the broadcast link…":"The organiser has not published this court’s YouTube link yet."}</p>
     {videoId&&<a href={youtubeWatchUrl(videoId)} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{marginTop:16}}><Youtube size={18}/> Watch on YouTube <ExternalLink size={14}/></a>}
