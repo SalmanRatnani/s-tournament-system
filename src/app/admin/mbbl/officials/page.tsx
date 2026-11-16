@@ -49,7 +49,7 @@ export default function MBBLRefereeAssignment(){
    if(!res.ok)throw Error(body.error||"Match control rejected");
    setNotice("Official game status updated: "+body.tie.status);
    await reload();
-  }catch(e){setError(e instanceof Error?e.message:"Game control failed");await reload();}
+  }catch(e){await reload();setError(e instanceof Error?e.message:"Game control failed");}
   finally{setBusy("");}
  }
  const team=(id:string)=>data.teams.find(t=>t.id===id)?.name||"Unknown team";
